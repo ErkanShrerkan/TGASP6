@@ -8,6 +8,10 @@
 *.obj
 *.cso
 
+# Debug shit
+*.pdb
+*.idb
+
 # Precompiled Headers
 *.gch
 *.pch
