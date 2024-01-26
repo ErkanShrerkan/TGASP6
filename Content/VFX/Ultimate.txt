@@ -1,0 +1,2171 @@
+{
+  "Name" : "TestEffect",
+  "Components": [
+    {
+      "Model": "Models/Effects/Beam.erc",
+      "Texture": "Textures/Beam.dds",
+      "FPS": 24,
+      "Frames": 30,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 18,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 24,
+          "Value": [
+            255,
+            255,
+            255,
+            400
+          ]
+        },
+	{
+          "Frame": 29,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        },
+        {
+          "Frame": 30,
+          "Value": [
+            255,
+            70,
+            70,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "Frame": 23,
+          "Value": [
+            0.3,
+            0.3,
+            1
+          ]
+        },
+	{
+          "Frame": 24,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 30,
+          "Value": [
+            0.75,
+            0.75,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 24,
+          "Value": [
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 35,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Beam.erc",
+      "Texture": "Textures/Beam.dds",
+      "FPS": 24,
+      "Frames": 30,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            100
+          ]
+        },
+        {
+          "Frame": 24,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            255,
+            200,
+            200,
+            0
+          ]
+        },
+        {
+          "Frame": 35,
+          "Value": [
+            255,
+            70,
+            70,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 3,
+          "Value": [
+            0.3,
+            0.3,
+            1
+          ]
+        },	
+ 	{
+          "Frame": 24,
+          "Value": [
+            0.1,
+            0.1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 35,
+          "Value": [
+            0.25,
+            0.25,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 24,
+          "Value": [
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 30,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Dome_ultimate.erc",
+      "Texture": "Textures/Gradient.dds",
+      "FPS": 24,
+      "Frames": 30,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            100
+          ]
+        },
+        {
+          "Frame": 24,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 35,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 3,
+          "Value": [
+            0.7,
+            0.7,
+            0.7
+          ]
+        },	
+ 	{
+          "Frame": 24,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 35,
+          "Value": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2,
+            0
+          ]
+        },
+        {
+          "Frame": 24,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/ChainOverlay.erc",
+      "Texture": "Textures/Chains.dds",
+      "FPS": 24,
+      "Frames": 30,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 24,
+          "Value": [
+            255,
+            255,
+            255,
+            500
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 30,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Frame": 3,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },	
+ 	{
+          "Frame": 23,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },
+ 	{
+          "Frame": 35,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            1,
+            1
+          ]
+        },
+	{
+          "Frame": 17,
+          "Value": [
+            1,
+            1
+          ]
+        },
+        {
+          "Frame": 30,
+          "Value": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Sworl_ultimate.erc",
+      "Texture": "Textures/Gradient.dds",
+      "FPS": 24,
+      "Frames": 48,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 17,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 25,
+          "Value": [
+            255,
+            255,
+            255,
+            600
+          ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            255,
+            255,
+            255,
+            450
+          ]
+        },
+        {
+          "Frame": 30,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        }, 	
+ 	{
+          "Frame": 24,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        },
+ 	{
+          "Frame": 27,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            -0.1,
+            -0.2
+          ]
+        },
+	{
+          "Frame": 19,
+          "Value": [
+            0.4,
+            0.4
+          ]
+        },
+        {
+          "Frame": 26,
+          "Value": [
+           0.6,
+           0.6
+          ]
+        }
+      ]
+    },
+    {
+      "Model": "Models/Effects/RuneCircle.erc",
+      "Texture": "Textures/Sigil.dds",
+      "FPS": 24,
+      "Frames":36,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 6,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 24,
+          "Value": [
+            255,
+            175,
+            175,
+            255
+          ]
+        },
+	{
+          "Frame": 30,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 6,
+          "Value": [
+            0.4,
+            0.4,
+            1
+          ]
+        },
+        {
+          "Frame": 35,
+          "Value": [
+            0.5,
+            0.5,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            1
+          ]
+        },
+        {
+          "Frame": 8,
+          "Value": [
+            0,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 15,
+          "Value": [
+            0.25,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 24,
+          "Value": [
+            0.75,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 35,
+          "Value": [
+            2,
+            0.8
+	  ]
+        }
+      ]
+    },
+ {
+      "Model": "Models/Effects/RuneCircle.erc",
+      "Texture": "Textures/Sigil.dds",
+      "FPS": 24,
+      "Frames":36,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 6,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 24,
+          "Value": [
+            255,
+            200,
+            200,
+            300
+          ]
+        },
+	{
+          "Frame": 30,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.4,
+            0.4,
+            0.4
+          ]
+        },
+	{
+          "Frame": 6,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        },
+        {
+          "Frame": 35,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            1
+          ]
+        },
+        {
+          "Frame": 8,
+          "Value": [
+            0,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 19,
+          "Value": [
+            -0.25,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 24,
+          "Value": [
+            -0.5,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 35,
+          "Value": [
+            -0.75,
+            0.8
+	  ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Beam.erc",
+      "Texture": "Textures/Beam.dds",
+      "FPS": 24,
+      "Frames": 33,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 21,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            255,
+            255,
+            255,
+            400
+          ]
+        },
+	{
+          "Frame": 32,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        },
+        {
+          "Frame": 33,
+          "Value": [
+            255,
+            70,
+            70,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "Frame": 26,
+          "Value": [
+            0.3,
+            0.3,
+            1
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 33,
+          "Value": [
+            0.75,
+            0.75,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 38,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Beam.erc",
+      "Texture": "Textures/Beam.dds",
+      "FPS": 24,
+      "Frames": 33,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            100
+          ]
+        },
+        {
+          "Frame": 27,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            255,
+            200,
+            200,
+            0
+          ]
+        },
+        {
+          "Frame": 38,
+          "Value": [
+            255,
+            70,
+            70,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            0.3,
+            0.3,
+            1
+          ]
+        },	
+ 	{
+          "Frame": 27,
+          "Value": [
+            0.1,
+            0.1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 38,
+          "Value": [
+            0.25,
+            0.25,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 33,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Dome_ultimate.erc",
+      "Texture": "Textures/Gradient.dds",
+      "FPS": 24,
+      "Frames": 33,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            100
+          ]
+        },
+        {
+          "Frame": 27,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 30,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 38,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            0.7,
+            0.7,
+            0.7
+          ]
+        },	
+ 	{
+          "Frame": 27,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 38,
+          "Value": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2,
+            0
+          ]
+        },
+        {
+          "Frame": 27,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/ChainOverlay.erc",
+      "Texture": "Textures/Chains.dds",
+      "FPS": 24,
+      "Frames": 33,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 27,
+          "Value": [
+            255,
+            255,
+            255,
+            500
+          ]
+        },
+	{
+          "Frame": 30,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 33,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },	
+ 	{
+          "Frame": 26,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },
+ 	{
+          "Frame": 38,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            1,
+            1
+          ]
+        },
+	{
+          "Frame": 20,
+          "Value": [
+            1,
+            1
+          ]
+        },
+        {
+          "Frame": 33,
+          "Value": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Sworl_ultimate.erc",
+      "Texture": "Textures/Gradient.dds",
+      "FPS": 24,
+      "Frames": 48,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 20,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 28,
+          "Value": [
+            255,
+            255,
+            255,
+            600
+          ]
+        },
+	{
+          "Frame": 29,
+          "Value": [
+            255,
+            255,
+            255,
+            450
+          ]
+        },
+        {
+          "Frame": 33,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        }, 	
+ 	{
+          "Frame": 27,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        },
+ 	{
+          "Frame": 30,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            -0.1,
+            -0.2
+          ]
+        },
+	{
+          "Frame": 22,
+          "Value": [
+            0.4,
+            0.4
+          ]
+        },
+        {
+          "Frame": 29,
+          "Value": [
+           0.6,
+           0.6
+          ]
+        }
+      ]
+    },
+    {
+      "Model": "Models/Effects/RuneCircle.erc",
+      "Texture": "Textures/Sigil.dds",
+      "FPS": 24,
+      "Frames":36,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 9,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            255,
+            175,
+            175,
+            255
+          ]
+        },
+	{
+          "Frame": 32,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 9,
+          "Value": [
+            0.4,
+            0.4,
+            1
+          ]
+        },
+        {
+          "Frame": 38,
+          "Value": [
+            0.5,
+            0.5,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            1
+          ]
+        },
+        {
+          "Frame": 11,
+          "Value": [
+            0,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 18,
+          "Value": [
+            0.25,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            0.75,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 38,
+          "Value": [
+            2,
+            0.8
+	  ]
+        }
+      ]
+    },
+ {
+      "Model": "Models/Effects/RuneCircle.erc",
+      "Texture": "Textures/Sigil.dds",
+      "FPS": 24,
+      "Frames":36,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 9,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            255,
+            200,
+            200,
+            300
+          ]
+        },
+	{
+          "Frame": 33,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.4,
+            0.4,
+            0.4
+          ]
+        },
+	{
+          "Frame": 9,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        },
+        {
+          "Frame": 38,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            1
+          ]
+        },
+        {
+          "Frame": 11,
+          "Value": [
+            0,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 22,
+          "Value": [
+            -0.25,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 27,
+          "Value": [
+            -0.5,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 38,
+          "Value": [
+            -0.75,
+            0.8
+	  ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Beam.erc",
+      "Texture": "Textures/Beam.dds",
+      "FPS": 24,
+      "Frames": 32,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 22,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            255,
+            255,
+            255,
+            400
+          ]
+        },
+	{
+          "Frame": 31,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        },
+        {
+          "Frame": 32,
+          "Value": [
+            255,
+            70,
+            70,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.5,
+            0.5,
+            1
+          ]
+        },
+        {
+          "Frame": 25,
+          "Value": [
+            0.3,
+            0.3,
+            1
+          ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 32,
+          "Value": [
+            0.75,
+            0.75,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 36,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Beam.erc",
+      "Texture": "Textures/Beam.dds",
+      "FPS": 24,
+      "Frames": 32,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            100
+          ]
+        },
+        {
+          "Frame": 26,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 29,
+          "Value": [
+            255,
+            200,
+            200,
+            0
+          ]
+        },
+        {
+          "Frame": 36,
+          "Value": [
+            255,
+            70,
+            70,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 5,
+          "Value": [
+            0.3,
+            0.3,
+            1
+          ]
+        },	
+ 	{
+          "Frame": 26,
+          "Value": [
+            0.1,
+            0.1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 36,
+          "Value": [
+            0.25,
+            0.25,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 32,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Dome_ultimate.erc",
+      "Texture": "Textures/Gradient.dds",
+      "FPS": 24,
+      "Frames": 32,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            100
+          ]
+        },
+        {
+          "Frame": 26,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 29,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 36,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 5,
+          "Value": [
+            0.7,
+            0.7,
+            0.7
+          ]
+        },	
+ 	{
+          "Frame": 26,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        },
+ 	{
+          "Frame": 36,
+          "Value": [
+            1.5,
+            1.5,
+            1.5
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2,
+            0
+          ]
+        },
+        {
+          "Frame": 26,
+          "Value": [
+            0,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/ChainOverlay.erc",
+      "Texture": "Textures/Chains.dds",
+      "FPS": 24,
+      "Frames": 32,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 26,
+          "Value": [
+            255,
+            255,
+            255,
+            500
+          ]
+        },
+	{
+          "Frame": 29,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 32,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Frame": 5,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },	
+ 	{
+          "Frame": 25,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },
+ 	{
+          "Frame": 36,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            1,
+            1
+          ]
+        },
+	{
+          "Frame": 19,
+          "Value": [
+            1,
+            1
+          ]
+        },
+        {
+          "Frame": 32,
+          "Value": [
+            1,
+            1
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Sworl_ultimate.erc",
+      "Texture": "Textures/Gradient.dds",
+      "FPS": 24,
+      "Frames": 50,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 19,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 27,
+          "Value": [
+            255,
+            255,
+            255,
+            600
+          ]
+        },
+	{
+          "Frame": 28,
+          "Value": [
+            255,
+            255,
+            255,
+            450
+          ]
+        },
+        {
+          "Frame": 32,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        }, 	
+ 	{
+          "Frame": 26,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        },
+ 	{
+          "Frame": 29,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            -0.1,
+            -0.2
+          ]
+        },
+	{
+          "Frame": 21,
+          "Value": [
+            0.4,
+            0.4
+          ]
+        },
+        {
+          "Frame": 28,
+          "Value": [
+           0.6,
+           0.6
+          ]
+        }
+      ]
+    },
+    {
+      "Model": "Models/Effects/RuneCircle.erc",
+      "Texture": "Textures/Sigil.dds",
+      "FPS": 24,
+      "Frames":36,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 8,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            255,
+            175,
+            175,
+            255
+          ]
+        },
+	{
+          "Frame": 32,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        },
+	{
+          "Frame": 8,
+          "Value": [
+            0.4,
+            0.4,
+            1
+          ]
+        },
+        {
+          "Frame": 36,
+          "Value": [
+            0.5,
+            0.5,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            1
+          ]
+        },
+        {
+          "Frame": 10,
+          "Value": [
+            0,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 17,
+          "Value": [
+            0.25,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            0.75,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 36,
+          "Value": [
+            2,
+            0.8
+	  ]
+        }
+      ]
+    },
+ {
+      "Model": "Models/Effects/RuneCircle.erc",
+      "Texture": "Textures/Sigil.dds",
+      "FPS": 24,
+      "Frames":36,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+	{
+          "Frame": 8,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            255,
+            200,
+            200,
+            300
+          ]
+        },
+	{
+          "Frame": 32,
+          "Value": [
+            255,
+            150,
+            150,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.4,
+            0.4,
+            0.4
+          ]
+        },
+	{
+          "Frame": 8,
+          "Value": [
+            0.85,
+            0.85,
+            0.85
+          ]
+        },
+        {
+          "Frame": 36,
+          "Value": [
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            1
+          ]
+        },
+        {
+          "Frame": 10,
+          "Value": [
+            0,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 21,
+          "Value": [
+            -0.25,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 26,
+          "Value": [
+            -0.5,
+            0.8
+	  ]
+        },
+	{
+          "Frame": 36,
+          "Value": [
+            -0.75,
+            0.8
+	  ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+#include "ShaderStructs.hlsli"
+
+// This gets Log Depth from worldPosition
+float GetLogDepth(float4 worldPosition)
+{
+	float4 worldToView = mul(FB_ToCamera, worldPosition);
+	float4 viewToProj = mul(FB_ToProjection, worldToView);
+	return viewToProj.z / viewToProj.w;
+}
+
+float GetLinDepth(float4 worldPosition)
+{
+	float logDepth = GetLogDepth(worldPosition);
+	return FB_NearPlane / (FB_FarPlane - logDepth * (FB_FarPlane - FB_NearPlane));
+}
+
+// Converts Log Depth to Lin Depth
+float LogDepthToLinDepth(float depth)
+{
+	return FB_NearPlane / (FB_FarPlane - depth * (FB_FarPlane - FB_NearPlane));
+}
+
+// No idea why this is a thing? We have the world pos, so why read it?
+//GetDepth(worldPositionTexture.Sample(defaultSampler, GetScreenCoords(input.myWorldPosition)).xyzw);
+
+VertexToPixel main(VertexInput input)
+{
+	VertexToPixel result;
+
+	float4 vertexObjectPos = input.myPosition;
+
+	if(OB_HasBones)
+	{
+		float4 boneWeights = input.myBoneWeights;
+		uint4 boneIds = input.myBoneIDs;
+
+		float4 skinnedPos = input.myPosition;
+		// Optional. Do this if you dont subtract the base pose from the animation.
+		// DO NOT do this if you do additive animations. At that point the base pose
+		// is already subtracted.
+		skinnedPos = 0; 
+
+		// Bone 1
+		skinnedPos += boneWeights.x * mul(input.myPosition, BB_Bones[boneIds.x]);
+
+		// Bone 2
+		skinnedPos += boneWeights.y * mul(input.myPosition, BB_Bones[boneIds.y]);
+
+		// Bone 3
+		skinnedPos += boneWeights.z * mul(input.myPosition, BB_Bones[boneIds.z]);
+
+		// Bone 4
+		skinnedPos += boneWeights.w * mul(input.myPosition, BB_Bones[boneIds.w]);
+
+		vertexObjectPos = skinnedPos;
+	}
+
+	float4 vertexWorldPos = mul(OB_ToWorld, vertexObjectPos);
+	float4 vertexViewPos = mul(FB_ToCamera, vertexWorldPos);
+	float4 vertexProjectionPos = mul(FB_ToProjection, vertexViewPos);
+
+	float3x3 toWorldRotation = (float3x3)OB_ToWorld;
+	float3 vertexWorldNormal = mul(toWorldRotation, input.myNormal);
+	float3 vertexWorldBiNormal = mul(toWorldRotation, input.myBiNormal);
+	float3 vertexWorldTangent = mul(toWorldRotation, input.myTangent);
+	
+	result.myPosition = vertexProjectionPos;
+	result.myWorldPosition = vertexWorldPos;
+	result.myVxColor = input.myVxColor;
+	result.myVxColor2 = input.myVxColor2;
+	result.myVxColor3 = input.myVxColor3;
+	result.myVxColor4 = input.myVxColor4;
+
+	result.myUV = input.myUV;
+	result.myUV2 = input.myUV2;
+	result.myUV3 = input.myUV3;
+	result.myUV4 = input.myUV4;
+
+	result.myNormal = vertexWorldNormal;
+	result.myBiNormal = vertexWorldBiNormal;
+	result.myTangent = vertexWorldTangent;
+	
+	result.myDepth = GetLinDepth(vertexWorldPos);
+	//result.myDepth = GetLogDepth(vertexWorldPos);
+	//result.myDepth = LogDepthToLinDepth(vertexWorldPos.z / vertexWorldPos.w);
+
+	//float4x4 camViewProj = FB_ToCamera * FB_ToProjection;
+	//float4 temp = mul(vertexWorldPos, camViewProj);
+	//result.myDepth = LogDepthToLinDepth(((temp.w - FB_NearPlane) / FB_FarPlane - FB_NearPlane) * -1);
+
+	//result.myVxColor2 = mul(camViewProj, vertexWorldPos);
+	
+	return result;
+}
+
+// Get screen texture coordinates from world position?
+float2 GetScreenCoords(float4 worldPosition)
+{
+	float4 worldToView = mul(FB_ToCamera, worldPosition);
+	float4 viewToProj = mul(FB_ToProjection, worldToView);
+
+	float2 projectedTextureCoords;
+	projectedTextureCoords.x = viewToProj.x / viewToProj.w / 2.0f + 0.5f;
+	projectedTextureCoords.y = viewToProj.y / viewToProj.w / 2.0f + 0.5f;
+
+	return projectedTextureCoords;
+}

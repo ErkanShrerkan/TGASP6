@@ -1,0 +1,185 @@
+{
+  "Name" : "Spit",
+  "Components": [
+    {
+      "Model": "Models/Effects/Circle_Rings.erc",
+      "Texture": "Textures/Rings.dds",
+      "FPS": 24,
+      "Frames": 12,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 12,
+          "Value": [
+            255,
+            0,
+            0,
+            500
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        {
+          "Frame": 24,
+          "Value": [
+            0.5,
+            0.5,
+            0.5
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            -0.1,
+            0.05
+          ]
+        },
+        {
+          "Frame": 20,
+          "Value": [
+            -0.7,
+            -0.3
+        ]
+        }
+      ]
+    },
+ {
+      "Model": "Models/Effects/Circle_Rings.erc",
+      "Texture": "Textures/BossSwirl.dds",
+      "FPS": 24,
+      "Frames": 12,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            0,
+            0,
+            255
+          ]
+        },
+        {
+          "Frame": 12,
+          "Value": [
+            255,
+            0,
+            0,
+            255
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.25,
+            0.25,
+            0.25
+          ]
+        },
+        {
+          "Frame": 24,
+          "Value": [
+            0.25,
+            0.25,
+            0.25
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.1,
+            0.05
+          ]
+        },
+        {
+          "Frame": 20,
+          "Value": [
+            0.7,
+            -0.3
+        ]
+        }
+      ]
+    }, 
+    {
+      "Model": "Models/Effects/circle_rings.erc",
+      "Texture": "Textures/rings.dds",
+      "FPS": 24,
+      "Frames":12,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            500
+          ]
+        },
+	{
+          "Frame": 12,
+          "Value": [
+            255,
+            60,
+            60,
+            255
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.15,
+            0.15,
+            0.15
+          ]
+        },
+        {
+          "Frame": 12,
+          "Value": [
+            0.15,
+            0.15,
+            0.15
+          ]
+        }
+     ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            -0.1,
+            0.05
+          ]
+        },
+        {
+          "Frame": 20,
+          "Value": [
+            -0.7,
+            -0.3
+        ]
+        }
+      ]
+    }
+  ]
+}

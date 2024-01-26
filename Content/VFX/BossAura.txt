@@ -1,0 +1,260 @@
+{
+  "Name": "TestEffect",
+  "Components": [
+    {
+      "Model": "Models/Effects/DangerZone.erc",
+      "Texture": "Textures/DangerZone.dds",
+      "FPS": 24,
+      "Frames": 150,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+ 	 {
+          "Frame": 15,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 75,
+          "Value": [
+            255,
+            255,
+            255,
+            255
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            255,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2.95,
+            1,
+            2.95
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            2.95,
+            1,
+            2.95
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0
+          ]
+        },
+       {
+          "Frame": 75,
+          "Value": [
+            2,
+            0.1
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            4,
+            0.2
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Circle_Rings.erc",
+      "Texture": "Textures/Superstrain.dds",
+      "FPS": 24,
+      "Frames": 150,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            0,
+            0,
+            0
+          ]
+        },
+ 	 {
+          "Frame": 15,
+          "Value": [
+            255,
+            50,
+            50,
+            255
+          ]
+        },
+        {
+          "Frame": 75,
+          "Value": [
+            255,
+            50,
+            50,
+            255
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            255,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            3.5,
+            3.5,
+            3.5
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0.8,
+            0
+          ]
+        },
+        {
+          "Frame": 25,
+          "Value": [
+            -1,
+            0.5
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            -2,
+            1
+          ]
+        }
+      ]
+     },
+    {
+      "Model": "Models/Effects/DamageAura.erc",
+      "Texture": "Textures/DangerZone.dds",
+      "FPS": 24,
+      "Frames": 150,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            0,
+            0,
+            0
+          ]
+        },
+ 	 {
+          "Frame": 15,
+          "Value": [
+            255,
+            50,
+            50,
+            175
+          ]
+        },
+        {
+          "Frame": 75,
+          "Value": [
+            255,
+            50,
+            50,
+            175
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            255,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            3.5,
+            1.5,
+            3.5
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            3.5,
+            1.5,
+            3.5
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0.3
+          ]
+        },
+        {
+          "Frame": 50,
+          "Value": [
+            -1,
+            0.3
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            -2,
+            0.3
+          ]
+        }
+      ]
+    }
+  ]
+}

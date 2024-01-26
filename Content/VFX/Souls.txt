@@ -1,0 +1,75 @@
+{
+  "Name" : "Souls",
+  "Loop" : 1,
+  "Components": [
+    {
+      "Model": "Models/Effects/Soulercoaster.erc",
+      "Texture": "Textures/Souls.dds",
+      "FPS": 24,
+      "Frames": 150,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            5,
+            5,
+            500
+          ]
+        },
+	{
+          "Frame": 75,
+          "Value": [
+            255,
+            0,
+            0,
+            600
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            255,
+            5,
+            5,
+            500
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            1.25,
+            1.25,
+            1.25
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            1.25,
+            1.25,
+            1.25
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0
+          ]
+        },
+        {
+          "Frame": 150,
+          "Value": [
+            1,
+            0
+          ]
+        }
+      ]
+    }
+  ]
+}
