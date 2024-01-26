@@ -6,6 +6,7 @@
 *.lo
 *.o
 *.obj
+*.cso
 
 # Precompiled Headers
 *.gch
@@ -30,3 +31,10 @@
 *.exe
 *.out
 *.app
+
+# Generated model files
+*.erc
+*.myr
+
+# Temp
+Temp/
