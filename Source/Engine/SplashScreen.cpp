@@ -34,14 +34,9 @@ SplashScreen::SplashScreen()
 
 SplashScreen::~SplashScreen()
 {
-	delete myTGALogo;
-	myTGALogo = nullptr;
-
-	delete myGroupLogo;
-	myGroupLogo = nullptr;
-
-	delete myFMODLogo;
-	myFMODLogo = nullptr;
+	myTGALogo->Release();
+	myGroupLogo->Release();
+	myFMODLogo->Release();
 }
 
 void SplashScreen::Update(float aDeltaTime)

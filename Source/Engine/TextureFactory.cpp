@@ -10,6 +10,16 @@
 
 namespace SE
 {
+    CTextureFactory::~CTextureFactory()
+    {
+        for (auto& [path, texture] : myPool)
+        {
+            delete texture;
+        }
+
+        myPool.clear();
+    }
+
     CFullscreenTexture CTextureFactory::CreateFullscreenTexture(const Vector2ui& aSize, DXGI_FORMAT aFormat)
     {
         HRESULT result;
@@ -177,9 +187,13 @@ namespace SE
 
     CTexture* CTextureFactory::LoadTexture(const std::string& aPath)
     {
-        return myPool.Get(aPath, [this, aPath](const std::string&) -> CTexture* {
-            return CreateTexture(aPath);
-        });
+        auto texture = myPool.find(aPath);
+        if (texture != myPool.end())
+        {
+            return texture->second;
+        }
+
+        return CreateTexture(aPath);
     }
     CTexture* CTextureFactory::CreateTexture(const std::string& aPath)
     {

@@ -11,6 +11,11 @@ GameWorld* GameWorld::ourInstance = nullptr;
 #include <pix3.h>
 
 
+GameWorld::~GameWorld()
+{
+    myVignette->Release();
+}
+
 void GameWorld::Init(SE::CCamera* aCamera)
 {
     myCamera = aCamera;

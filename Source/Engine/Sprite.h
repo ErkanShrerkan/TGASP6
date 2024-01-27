@@ -27,6 +27,8 @@ namespace SE
          - Color
          
          */
+        ~CSprite();
+        void Release();
         void SetPosition(const Vector2f& aPosition);
         void SetSize(const Vector2f& aSize);
         void SetSizeRelativeToScreen(const Vector2f& aSize);

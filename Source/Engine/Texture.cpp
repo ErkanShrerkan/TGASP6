@@ -48,6 +48,11 @@ SE::CTexture::CTexture(const std::string_view& aFilePath)
 
 SE::CTexture::~CTexture()
 {
+	Release();
+}
+
+void SE::CTexture::Release()
+{
 	if (myShaderResourceView)
 		myShaderResourceView->Release();
 	myShaderResourceView = nullptr;

@@ -11,6 +11,7 @@ namespace SE
         CTexture();
         CTexture(const std::string_view& aFilePath);
         ~CTexture();
+        void Release();
         ID3D11ShaderResourceView* const GetShaderResourceView() const noexcept;
         ID3D11ShaderResourceView* const* GetPointerToShaderResourceView() const;
         void SetShaderResourceView(ID3D11ShaderResourceView* const aShaderResourceView);

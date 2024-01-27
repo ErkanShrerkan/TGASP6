@@ -8,6 +8,15 @@
 
 namespace SE
 {
+    CSprite::~CSprite()
+    {
+        myVertexBuffer->Release();
+        SE::DX11::Content->GetSpriteFactory().ReturnSprite(this, false);
+    }
+    void CSprite::Release()
+    {
+        SE::DX11::Content->GetSpriteFactory().ReturnSprite(this);
+    }
     void CSprite::SetPosition(const Vector2f& aPosition)
     {
         myPosition.x = aPosition.x;

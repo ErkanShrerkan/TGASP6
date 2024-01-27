@@ -10,6 +10,7 @@ namespace SE
 class GameWorld
 {
 public:
+    ~GameWorld();
     void Init(SE::CCamera* aCamera);
     void Update();
 

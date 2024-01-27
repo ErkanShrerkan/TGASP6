@@ -13,7 +13,7 @@ UIElement::UIElement(const char* aPath)
 
 UIElement::~UIElement()
 {
-    
+    mySprite->Release();
 }
 
 void UIElement::Update()

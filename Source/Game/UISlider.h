@@ -6,6 +6,7 @@ class UISlider :
     public UIElement
 {
 public:
+    ~UISlider();
     UISlider(const char* aPath, eMessage aMsgType);
     void Update() override;
     void Render() override;

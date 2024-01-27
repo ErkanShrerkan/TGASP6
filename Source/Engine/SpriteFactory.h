@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <CommonUtilities\Container\KeyedPool.hpp>
+#include <set>
 
 struct ID3D11VertexShader;
 struct ID3D11Buffer;
@@ -10,13 +11,18 @@ namespace SE
     class CSprite;
     class CSpriteFactory
     {
+        friend class CSprite;
     public:
+        ~CSpriteFactory();
         void InitFactory();
         SE::CSprite* GetSprite(const std::string& aSpritePath);
 
     private:
+        void ReturnSprite(SE::CSprite* aSprite, bool anAlsoDelete = true);
         SE::CSprite* CreateSprite(const std::string& aSpritePath);
-        CommonUtilities::KeyedPool<std::string, CSprite> myPool;
+        //CommonUtilities::KeyedPool<std::string, CSprite> myPool;
+        std::set<CSprite*> myPool;
+
 
     private:
         struct SVertex

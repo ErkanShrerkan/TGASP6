@@ -52,6 +52,7 @@ private:
     void LoadLevel(int anIndex);
 
 public:
+    ~LevelHandler();
     void Init(const std::string& aLevelConfig);
     void UpdateActiveLevel();
     inline Level& GetActiveLevel()

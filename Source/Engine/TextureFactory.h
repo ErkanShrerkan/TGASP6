@@ -13,6 +13,7 @@ namespace SE
     class CTextureFactory
     {
     public:
+        ~CTextureFactory();
         CFullscreenTexture CreateFullscreenTexture(const Vector2ui& aSize, DXGI_FORMAT aFormat);
         CFullscreenTexture CreateFullscreenDepth(const Vector2ui& aSize, DXGI_FORMAT aFormat);
         CFullscreenTexture CreateFullscreenTexture(ID3D11Texture2D* const& aTexture);
@@ -21,7 +22,7 @@ namespace SE
         CTexture* CreateTexture(const std::string& aPath);
 
     private:
-
-        CommonUtilities::KeyedPool<std::string, CTexture> myPool;
+        std::map<std::string, CTexture*> myPool;
+        //CommonUtilities::KeyedPool<std::string, CTexture> myPool;
     };
 }

@@ -7,6 +7,10 @@
 #include <Engine\Input.h>
 #include <Engine/AudioEngine.h>
 #include "UIGauge.h"
+UISlider::~UISlider()
+{
+	mySliderIcon->Release();
+}
 UISlider::UISlider(const char* aPath, eMessage aMsgType)
 	: UIElement(aPath)
 {

@@ -46,6 +46,11 @@ void LevelHandler::LoadLevel(int anIndex)
 	//}
 }
 
+LevelHandler::~LevelHandler()
+{
+	myLoadingScreen->Release();
+}
+
 void LevelHandler::Init(const std::string& aLevelConfig)
 {
 	myLoadingScreen = SE::CEngine::GetInstance()->GetContentLoader()->GetSpriteFactory().GetSprite("Textures/Sprites/UI/UI_S_loadingScreen.dds");
