@@ -109,18 +109,20 @@ void EnemySystem::Thread()
 {
 	SE::CPathFinding pathFinder;
 	SE::SNavTriangle* playerNavTriangle = myPlayerSystem->GetCurrentTriangle();
-	if (playerNavTriangle != nullptr)
+	if (playerNavTriangle == nullptr)
 	{
-		pathFinder.BjornFill(myNavTriangles, playerNavTriangle->myIndex, myNextFloodFillNodes);
-		if (myPreviousFloodFillNodes.size() <= 0)
-		{
-			myPreviousFloodFillNodes = myNextFloodFillNodes;
-		}
-		myIsSwapping = true;
-		myPreviousFloodFillNodes = myNextFloodFillNodes;
-		//std::swap(myNextFloodFillNodes, myPreviousFloodFillNodes);
-		myIsSwapping = false;
+		return;
 	}
+
+	pathFinder.BjornFill(myNavTriangles, playerNavTriangle->myIndex, myNextFloodFillNodes);
+	if (myPreviousFloodFillNodes.size() <= 0)
+	{
+		myPreviousFloodFillNodes = myNextFloodFillNodes;
+	}
+	myIsSwapping = true;
+	myPreviousFloodFillNodes = myNextFloodFillNodes;
+	//std::swap(myNextFloodFillNodes, myPreviousFloodFillNodes);
+	myIsSwapping = false;
 
 
 }
@@ -205,7 +207,7 @@ void EnemySystem::Update()
 			Matrix4x4f m = model.animator->GetJointTransform("Staff_prop_Jnt") * transform.GetMatrix();
 			float3 pos = m.GetRow(4).xyz - m.GetRow(3).xyz * 69.414f;
 			m.SetRow(4, { pos, 1 });
-			CDebugDrawer::GetInstance().DrawSphere(m.GetPosition(), 10, {1, 0, 0, 1});
+			CDebugDrawer::GetInstance().DrawSphere(m.GetPosition(), 10, { 1, 0, 0, 1 });
 			myCoordinator->GetComponent<ParticleEmitter>(enemy).GetTransform().GetMatrix() = m;
 			myCoordinator->GetComponent<Light>(enemy)->SetPosition(pos);
 		}
@@ -403,24 +405,24 @@ void EnemySystem::Update()
 			{
 				Enemy::eType enemyType = myCoordinator->GetComponent<Enemy>(enemy).myType;
 
-				
-					switch (enemyType)
-					{
-					case Enemy::eType::eKubbLeffe:
-						SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_Kubb_Leffe_Death, myCoordinator->GetComponent<Transform>(enemy).GetPosition(), true);
-						break;
-					case Enemy::eType::eBogSchyte:
-						SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_BogSchythe_Death, myCoordinator->GetComponent<Transform>(enemy).GetPosition(), true);
-						break;
-					case Enemy::eType::eCultist:
-						SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_Cultist_Death, myCoordinator->GetComponent<Transform>(enemy).GetPosition(), true);
-						break;
-					case Enemy::eType::eChampion:
-						SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_Champion_Death, myCoordinator->GetComponent<Transform>(enemy).GetPosition(), true);
-						break;
-					default:
-						break;
-					}
+
+				switch (enemyType)
+				{
+				case Enemy::eType::eKubbLeffe:
+					SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_Kubb_Leffe_Death, myCoordinator->GetComponent<Transform>(enemy).GetPosition(), true);
+					break;
+				case Enemy::eType::eBogSchyte:
+					SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_BogSchythe_Death, myCoordinator->GetComponent<Transform>(enemy).GetPosition(), true);
+					break;
+				case Enemy::eType::eCultist:
+					SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_Cultist_Death, myCoordinator->GetComponent<Transform>(enemy).GetPosition(), true);
+					break;
+				case Enemy::eType::eChampion:
+					SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_Champion_Death, myCoordinator->GetComponent<Transform>(enemy).GetPosition(), true);
+					break;
+				default:
+					break;
+				}
 
 				PlayerGainXP(leffe);
 				audio.Stop(true);
@@ -649,7 +651,7 @@ void EnemySystem::OnTriggerEnter(const TriggerData& someTriggerData)
 			health.TakeDamage(someTriggerData.damage);
 		}
 		Enemy::eType enemyType = myCoordinator->GetComponent<Enemy>(someTriggerData.affectedEntity).myType;
-		
+
 		SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Enemies_Kubb_Leffe_Damage, myCoordinator->GetComponent<Transform>(someTriggerData.affectedEntity).GetPosition(), true);
 
 		if (health.IsEntityDead())
@@ -657,7 +659,7 @@ void EnemySystem::OnTriggerEnter(const TriggerData& someTriggerData)
 			model.shaderType = SE::ShaderType::eNone;
 			//myCoordinator->DestroyEntity(someTriggerData.affectedEntity);
 
-			
+
 			switch (enemyType)
 			{
 			case Enemy::eType::eKubbLeffe:
@@ -731,7 +733,7 @@ void EnemySystem::BasicAttack(Transform& aTransform, Enemy::eType anEnemyType)
 	default:
 		break;
 	}
-	
+
 }
 
 void EnemySystem::CultistAttack(Transform aTransform)

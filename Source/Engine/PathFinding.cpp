@@ -279,34 +279,35 @@ std::vector<int> SE::CPathFinding::BjornFill(const std::vector<SNavTriangle*>& s
 		}
 	}
 
-	for (auto& node : someNodes)
+	for (auto& [node, newNode] : someNodes)
 	{
-		if ((int)node.first->myIndex == aPlayerIndex)
+		if ((int)node->myIndex == aPlayerIndex)
 		{
-			node.second.f = 0;
+			newNode.f = 0;
 			continue;
 		}
-		if (node.first->myConnectedTriangles.size() == 0)
+		if (node->myConnectedTriangles.size() == 0)
 		{
 			continue;
 		}
 		int lowestDistance =-1;
-		int size = (int)node.first->myConnectedTriangles.size();
+		int size = (int)node->myConnectedTriangles.size();
 		for (int i = 0; i < size; i++)
 		{
+			const int f = someNodes[node->myConnectedTriangles[i]].f;
 			if (lowestDistance == -1)
 			{
-				lowestDistance = someNodes[node.first->myConnectedTriangles[i]].f;
+				lowestDistance = f;
 				continue;
 			}
 				
-			if (someNodes[node.first->myConnectedTriangles[i]].f != -1 && someNodes[node.first->myConnectedTriangles[i]].f < lowestDistance)
+			if (f != -1 && f < lowestDistance)
 			{
-				lowestDistance = someNodes[node.first->myConnectedTriangles[i]].f;
+				lowestDistance = f;
 			}
 
 		}
-		node.second.f = lowestDistance + 1;
+		newNode.f = lowestDistance + 1;
 
 		//std::this_thread::sleep_for(std::chrono::nanoseconds(100));
 	}

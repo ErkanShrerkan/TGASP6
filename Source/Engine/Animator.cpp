@@ -3,6 +3,7 @@
 #include "AnimationFactory.h"
 #include "Animation.h"
 #include "Model.h"
+#include <stack>
 
 namespace SE
 {
@@ -51,6 +52,8 @@ namespace SE
 			return;
 		}
 
+		//aDeltaTime *= 0.05f;
+
 		UpdateTime(aDeltaTime);
 		UpdateBlend(aDeltaTime);
 
@@ -58,7 +61,7 @@ namespace SE
 		ApplyPoseToJoints(myCurrentAnimPtr->myRootName, worldSpaceTransform);
 	}
 
-	void CAnimator::Play(std::string anAnim, bool aLoop, std::string aFallbackAnim, bool aLoopBlend)
+	void CAnimator::Play(const std::string& anAnim, bool aLoop, const std::string& aFallbackAnim, bool aLoopBlend, float aBlendTransitionTimeIn, float aBlendTransitionTimeOut)
 	{
 		assert(myAnimations.find(anAnim) != myAnimations.end());
 		if (myCurrentAnim != anAnim)
@@ -77,14 +80,32 @@ namespace SE
 		myTime = 0;
 		myLoopBlend = aLoopBlend;
 
-		myHasFallback = !aFallbackAnim.empty();
-		myFallBackAnim = aFallbackAnim;
+		myBlendTransitionTimeInSeconds = aBlendTransitionTimeIn;
+
+		SetFallbackAnimation(aFallbackAnim);
+
+		if (myHasFallback)
+		{
+			myFallbackBlendTransitionTimeInSeconds = aBlendTransitionTimeOut;
+		}
+
+		if (myOnOverCallback)
+		{
+			myOnOverCallback();
+			myOnOverCallback = nullptr;
+		}
 	}
 
-	Matrix4x4f CAnimator::GetJointTransform(std::string aJoint)
+	void CAnimator::SetOnOverCallback(std::function<void()> aCallback)
 	{
-		int i = myModel->GetSkeleton().myJointNameToIndex[aJoint];
-		return Matrix4x4f::GetFastInverse(myModel->GetSkeleton().myJoints[i].myBindPoseInverse) * myJointTransforms[i];
+		myOnOverCallback = aCallback;
+	}
+
+	Matrix4x4f CAnimator::GetJointTransform(std::string aJoint) const
+	{
+		const CModel::SSkeleton& skeleton = myModel->GetSkeleton();
+		const int i = skeleton.myJointNameToIndex.at(aJoint);
+		return Matrix4x4f::GetFastInverse(skeleton.myJoints.at(i).myBindPoseInverse) * myJointTransforms[i];
 	}
 
 	Quaternion CAnimator::ConvertAssimpQuaternion(float4 aQuaternion)
@@ -99,20 +120,13 @@ namespace SE
 
 	void CAnimator::ApplyPoseToJoints(const std::string& aNodeName, Matrix4x4f& aParentTransform)
 	{
-		CModel::SSkeleton& skeleton = myModel->GetSkeleton();
-
 		Matrix4x4f nodeTransform = myNodeTransforms[aNodeName];
 
-		ApplyFrameData(aNodeName, nodeTransform);
+		CalculateJointTransform(aNodeName, nodeTransform);
 
 		Matrix4x4f currentTransform = nodeTransform * aParentTransform;
 
-		auto joint = skeleton.myJointNameToIndex.find(aNodeName);
-		if (joint != skeleton.myJointNameToIndex.end())
-		{
-			int jointIndex = joint->second;
-			myJointTransforms[jointIndex] = skeleton.myJoints[jointIndex].myBindPoseInverse * currentTransform * myCurrentAnimPtr->myRootTransform;
-		}
+		ApplyJointTransform(aNodeName, currentTransform);
 
 		const auto& children = myCurrentAnimPtr->GetJointHierarchy()[aNodeName];
 		for (const auto& childName : children)
@@ -198,35 +212,40 @@ namespace SE
 			return;
 		}
 
+		if (myShouldLoop)
+		{
+			myTime -= myCurrentAnimPtr->myDurationInSeconds;
+			return;
+		}
+
 		myIsOver = true;
-		if (myHasFallback && !myShouldLoop)
+		if (myHasFallback)
 		{
 			myBlendAnim = myCurrentAnim;
-			myBlendTime = myTime;
+			myBlendTime = myTime - (1.0f / myAnimations[myBlendAnim]->myFPS);
 			myCurrentAnim = myFallBackAnim;
 			myBlend = 0;
 			myHasFallback = false;
 			myTime -= myCurrentAnimPtr->myDurationInSeconds;
 			myShouldLoop = true;
+			if (myOnOverCallback)
+			{
+				myOnOverCallback();
+				myOnOverCallback = nullptr;
+			}
 			return;
 		}
 
-		if (!myHasFallback && !myShouldLoop)
-		{
-			myTime = myCurrentAnimPtr->myDurationInSeconds;
-			return;
-		}
-
-		myTime -= myCurrentAnimPtr->myDurationInSeconds;
+		myTime = myCurrentAnimPtr->myDurationInSeconds;
 	}
 
 	void CAnimator::UpdateBlend(float aDeltaTime)
 	{
-		float blendMult = 7.5f;
+		float blendMult = myHasFallback ? 1.0f / myBlendTransitionTimeInSeconds : 1.0f / myFallbackBlendTransitionTimeInSeconds;
 		myBlend = myBlend + aDeltaTime * blendMult >= 1 ? 1 : myBlend + aDeltaTime * blendMult;
-		myBlendTime += aDeltaTime;
+		myBlendTime += aDeltaTime * myLoopBlend;
 
-		if (!(myBlend < 1 && myCurrentAnim != myBlendAnim))
+		if (!(myBlend < 1.0f && myCurrentAnim != myBlendAnim))
 		{
 			return;
 		}
@@ -308,9 +327,9 @@ namespace SE
 		UpdateNodeTransform(aNodeTransform, *myCurrentAnimPtr, aNodeName, myTime);
 	}
 
-	void CAnimator::ApplyFrameData(const std::string& aNodeName, float4x4& aNodeTransform)
+	void CAnimator::CalculateJointTransform(const std::string& aNodeName, float4x4& aNodeTransform)
 	{
-		auto& tracks = myCurrentAnimPtr->GetTracks();
+		const auto& tracks = myCurrentAnimPtr->GetTracks();
 		if (tracks.find(aNodeName) == tracks.end())
 		{
 			return;
@@ -325,9 +344,26 @@ namespace SE
 		ApplySingle(aNodeName, aNodeTransform);
 	}
 
+	void CAnimator::ApplyJointTransform(const std::string& aNodeName, const float4x4& aCurrentTransform)
+	{
+		const CModel::SSkeleton& skeleton = myModel->GetSkeleton();
+		const auto joint = skeleton.myJointNameToIndex.find(aNodeName);
+		if (joint == skeleton.myJointNameToIndex.end())
+		{
+			return;
+		}
+		const int jointIndex = joint->second;
+		const float4x4 pose = skeleton.myJoints[jointIndex].myBindPoseInverse * aCurrentTransform;
+		const float4x4 rootPose = myCurrentAnimPtr->myRootTransform;
+		myJointTransforms[jointIndex] = pose * rootPose;
+	}
+
 	bool CAnimator::ShouldBlend(const std::string& aNodeName) const
 	{
 		CAnimation& blendAnim = *myAnimations.at(myBlendAnim);
-		return myBlend < 1.f && myBlendAnim != myCurrentAnim && blendAnim.GetTracks().find(aNodeName) != blendAnim.GetTracks().end();
+		const bool blendIsNotFinished = myBlend < 1.f;
+		const bool blendAnimIsNotCurrentAnim = myBlendAnim != myCurrentAnim;
+		const bool blendAnimExists = blendAnim.GetTracks().find(aNodeName) != blendAnim.GetTracks().end();
+		return blendIsNotFinished && blendAnimIsNotCurrentAnim && blendAnimExists;
 	}
 }

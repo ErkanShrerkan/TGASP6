@@ -11,6 +11,14 @@ namespace SE
 		return myAnimations.find(aPath) == myAnimations.end() ? CreateAnimation(aPath) : LoadAnimation(aPath);
 	}
 
+	CAnimationFactory::~CAnimationFactory()
+	{
+		//for (auto& [name, anim] : myAnimations)
+		//{
+		//	delete anim;
+		//}
+	}
+
 	CAnimation* CAnimationFactory::CreateAnimation(std::string aPath)
 	{
 		std::ifstream t(aPath, std::ios::in | std::ios::binary);

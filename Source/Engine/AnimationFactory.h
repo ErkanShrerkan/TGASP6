@@ -21,6 +21,7 @@ namespace SE
 
 	private:
 		CAnimationFactory() {}
+		~CAnimationFactory();
 		CAnimation* CreateAnimation(std::string aPath);
 		CAnimation* LoadAnimation(std::string aPath);
 

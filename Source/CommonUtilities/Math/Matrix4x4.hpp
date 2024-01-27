@@ -55,10 +55,10 @@ namespace CommonUtilities
 
 
 		// Operator Overloading
-		const Matrix4x4<T> operator+(const Matrix4x4<T>& aMatrix);
-		const Matrix4x4<T> operator-(const Matrix4x4<T>& aMatrix);
-		const Matrix4x4<T> operator*(const Matrix4x4<T>& aMatrix);
-		Matrix4x4<T> operator*(Matrix4x4<T>& aMatrix);
+		const Matrix4x4<T> operator+(const Matrix4x4<T>& aMatrix) const;
+		const Matrix4x4<T> operator-(const Matrix4x4<T>& aMatrix) const;
+		const Matrix4x4<T> operator*(const Matrix4x4<T>& aMatrix) const;
+		Matrix4x4<T> operator*(Matrix4x4<T>& aMatrix) const;
 		const Matrix4x4<T>& operator=(const Matrix4x4<T>& aMatrix);
 		const bool operator==(const Matrix4x4<T>& aMatrix) const;
 		void operator+=(const Matrix4x4<T>& aMatrix);
@@ -298,28 +298,28 @@ namespace CommonUtilities
 		return GetRow(4).xyz;
 	}
 	template<class T>
-	inline const Matrix4x4<T> Matrix4x4<T>::operator+(const Matrix4x4<T>& aMatrix)
+	inline const Matrix4x4<T> Matrix4x4<T>::operator+(const Matrix4x4<T>& aMatrix) const
 	{
 		Matrix4x4 matrix(*this);
 		matrix += aMatrix;
 		return matrix;
 	}
 	template<class T>
-	inline const Matrix4x4<T> Matrix4x4<T>::operator-(const Matrix4x4<T>& aMatrix)
+	inline const Matrix4x4<T> Matrix4x4<T>::operator-(const Matrix4x4<T>& aMatrix) const
 	{
 		Matrix4x4 matrix(*this);
 		matrix -= aMatrix;
 		return matrix;
 	}
 	template<class T>
-	inline const Matrix4x4<T> Matrix4x4<T>::operator*(const Matrix4x4<T>& aMatrix)
+	inline const Matrix4x4<T> Matrix4x4<T>::operator*(const Matrix4x4<T>& aMatrix) const
 	{
 		Matrix4x4 matrix(*this);
 		matrix *= aMatrix;
 		return matrix;
 	}
 	template<class T>
-	inline Matrix4x4<T> Matrix4x4<T>::operator*(Matrix4x4<T>& aMatrix)
+	inline Matrix4x4<T> Matrix4x4<T>::operator*(Matrix4x4<T>& aMatrix) const
 	{
 		Matrix4x4 matrix(*this);
 		matrix *= aMatrix;

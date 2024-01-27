@@ -374,7 +374,6 @@ void PlayerSystem::Update()
 		Postmaster::GetInstance()->SendMail(eMessage::eLevelUp);
 		myExperienceComponent->AddXP(1);
 	}
-#endif // _DEBUG
 
 	if (Input::GetInputPressed(eButtonInput::ToggleOutline))
 	{
@@ -406,6 +405,7 @@ void PlayerSystem::Update()
 		myModel->shaderType = SE::ShaderType(flag);
 		myModel->color.a = 1;
 	}
+#endif // _DEBUG
 	
 	//EXPOSE VARIABLES LOL
 	myAbilityCooldowns[static_cast<int>(Abilities::HEAL)]->SetTimeInterval(healCooldown);
@@ -1561,7 +1561,7 @@ void PlayerSystem::RmbAttack()
 
 	SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Player_RMBAttack);
 
-	myModel->animator->Play("HeavyAttack", false, "Idle", false);
+	myModel->animator->Play("HeavyAttack", false, "Idle", false, 0.1f, 0.3f);
 
 	//Transform t;
 	//t.SetPosition(myTransform->GetPosition() - 1.f * myTransform->GetTransform().GetForward());
@@ -1581,6 +1581,11 @@ void PlayerSystem::RmbAttack()
 
 void PlayerSystem::LmbAttackAir()
 {
+	if (!myHitAnimIsDone)
+	{
+		return;
+	}
+
 	myStartedWalking = true;
 
 	myAbilityAvailability[static_cast<int>(Abilities::LMB)] = false;
@@ -1597,9 +1602,13 @@ void PlayerSystem::LmbAttackAir()
 		myCurrentComboIndex = 0;
 	}
 
-	myModel->animator->Play(myComboAnims[myCurrentComboIndex], false, "Idle", false);
-
-	myCurrentComboIndex++;
+	myModel->animator->Play(myComboAnims[myCurrentComboIndex], false, "Idle", false, 0.1f, 0.15f);
+	myHitAnimIsDone = false;
+	myModel->animator->SetOnOverCallback([&]()
+		{
+			myHitAnimIsDone = true;
+			myCurrentComboIndex++;
+		});
 
 	SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Player_LMBAttack);
 
@@ -1623,6 +1632,10 @@ void PlayerSystem::LmbAttackAir()
 
 void PlayerSystem::LmbAttackTarget()
 {
+	if (!myHitAnimIsDone)
+	{
+		return;
+	}
 
 	SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Player_LMBAttack);
 	myStartedWalking = true;
@@ -1638,9 +1651,13 @@ void PlayerSystem::LmbAttackTarget()
 		myCurrentComboIndex = 0;
 	}
 
-	myModel->animator->Play(myComboAnims[myCurrentComboIndex], false, "Idle");
-
-	myCurrentComboIndex++;
+	myModel->animator->Play(myComboAnims[myCurrentComboIndex], false, "Idle", false, 0.1f, 0.15f);
+	myHitAnimIsDone = false;
+	myModel->animator->SetOnOverCallback([&]()
+		{
+			myHitAnimIsDone = true;
+			myCurrentComboIndex++;
+		});
 
 	myTargetHealth->TakeDamage(myLmbDamage);
 
@@ -1767,7 +1784,7 @@ void PlayerSystem::StopWalking()
 {
 	if (Singleton<UIManager>().GetStateStack().GetCurrentState().GetStateID() == eStateID::Pause || Singleton<UIManager>().GetStateStack().GetCurrentState().GetStateID() == eStateID::Cutscene)
 	{
-		myModel->animator->Play("Idle", false, "Idle");
+		myModel->animator->Play("Idle", true);
 		myIsWalking = false;
 	}
 }
@@ -2030,7 +2047,7 @@ void PlayerSystem::OnTriggerEnter(const TriggerData& someTriggerData)
 	{
 		if (myMinibossCutscenePlayed == false && someTriggerData.event == TriggerEvent::MinibossCutscene)
 		{
-			myModel->animator->Play("Idle", false, "Idle");
+			myModel->animator->Play("Idle", true);
 			myIsWalking = false;
 
 			Singleton<UIManager>().GetStateStack().PushState(eStateID::Cutscene);
@@ -2039,7 +2056,7 @@ void PlayerSystem::OnTriggerEnter(const TriggerData& someTriggerData)
 		}
 		else if (myFinalBossSpawned == false && someTriggerData.event == TriggerEvent::SpawnBoss)
 		{
-			myModel->animator->Play("Idle", false, "Idle");
+			myModel->animator->Play("Idle", true);
 			myIsWalking = false;
 
 			AudioSystem::GetInstance()->ChangeMusic(AudioClip::Music_Boss);
@@ -2057,7 +2074,7 @@ void PlayerSystem::OnTriggerEnter(const TriggerData& someTriggerData)
 		myDialogCutscenePlayed = true;
 		Singleton<UIManager>().GetStateGameplay()->SetObjectiveIndex(1);
 
-		myModel->animator->Play("Idle", false, "Idle");
+		myModel->animator->Play("Idle", true);
 		myIsWalking = false;
 		myWalkAudio.Stop();
 	}

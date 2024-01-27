@@ -294,6 +294,7 @@ public:
 	void SetTryToPlayUltimateVFX(const bool& aBool);
 private:
 	bool myTryToPlayUnlockUltimateVFX = false;
+	bool myHitAnimIsDone = true;
 	int myFrameDelayCount = 0;
 	int myCurrentMapLevelIndex;
 };
