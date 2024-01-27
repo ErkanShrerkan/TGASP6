@@ -28,6 +28,10 @@ namespace SE
 
 	CForwardRenderer::~CForwardRenderer()
 	{
+		myCircularFillPixelShader->Release();
+		myFisheyePixelShader->Release();
+		mySpritePixelShader->Release();
+		mySpriteVertexShader->Release();
 	}
 
 	bool CForwardRenderer::Init(CDirectX11Framework* aFramework)

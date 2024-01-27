@@ -58,4 +58,13 @@ namespace SE
         context->Draw(3u, 0u);
         Singleton<Debug::CDebugProfiler>().IncrementDrawCallCount();
     }
+
+    CFullscreenRenderer::~CFullscreenRenderer()
+    {
+        for (auto& shader : myPixelShaders)
+        {
+            shader->Release();
+        }
+        myVertexShader->Release();
+    }
 }

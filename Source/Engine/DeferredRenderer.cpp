@@ -22,6 +22,15 @@ namespace SE
 
 	CDeferredRenderer::~CDeferredRenderer()
 	{
+		myFrameBuffer->Release();
+		myObjectBuffer->Release();
+		myLightBuffer->Release();
+		myPixelShader->Release();
+		myPPPShader->Release();
+		myReflectionShader->Release();
+		myCurrentPixelShader->Release();
+		myLightShader->Release();
+		myFullscreenShader->Release();
 	}
 
 	bool CDeferredRenderer::Init()

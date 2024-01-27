@@ -108,6 +108,7 @@ namespace SE
         SParticleSettings mySettings;
 
     public:
+        ~CParticleEmitter();
         __forceinline const SParticleSettings& GetSettings() const
         {
             return mySettings;

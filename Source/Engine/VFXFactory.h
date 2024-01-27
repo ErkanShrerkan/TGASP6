@@ -7,6 +7,7 @@ namespace SE
 	class CVFXFactory
 	{
 	public:
+		~CVFXFactory();
 		static CVFXFactory& GetInstance()
 		{
 			static CVFXFactory instance;

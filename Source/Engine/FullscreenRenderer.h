@@ -34,6 +34,7 @@ namespace SE
         void Render(const EShader& aMode);
         ID3D11VertexShader* GetVertexShader() { return myVertexShader; }
         ID3D11PixelShader* GetPixelShader(EShader aShader) { return myPixelShaders[aShader]; }
+        ~CFullscreenRenderer();
 
     private:
         struct SFullscreenDataBuffer

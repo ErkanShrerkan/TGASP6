@@ -11,6 +11,7 @@ namespace SE
 	class CVFXRenderer
 	{
 	public:
+		~CVFXRenderer();
 		bool Init();
 		void Render(CCamera* aCamera, std::vector<CVFXManager::SVFXCollection>& someVFXs);
 

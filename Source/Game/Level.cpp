@@ -346,7 +346,7 @@ void Level::RenderDebugNavMesh()
 
         }
         //myNavMeshModel->Render();
-        myDebugClickPos->Render();
+        myDebugClickPos.Render();
     }
 }
 
@@ -617,7 +617,7 @@ bool Level::PopulateFromJson(const std::string& aFilePath)
     myPlayerSystem.CalculatePlayerYPosition();
 
 
-    myPlayerSystem.SetDebugClickPos(myDebugClickPos);
+    myPlayerSystem.SetDebugClickPos(&myDebugClickPos);
     myEnemySystem.SetNavMesh(myNavMesh.myNavTriangles);
 
     //Boss cutscene trigger
@@ -639,7 +639,7 @@ bool Level::PopulateFromJson(const std::string& aFilePath)
 #pragma region CleaUpLater
 
 
-    SE::CModel* model2 = SE::DX11::Content->Load<SE::CModel>("Models/CH_EY_Kubb/CH_EY_Kubb.fbx");
+    //SE::CModel* model2 = SE::DX11::Content->Load<SE::CModel>("Models/CH_EY_Kubb/CH_EY_Kubb.fbx");
    /* for (int i = 0; i < myNavMesh.myNavVertices.size(); i++)
         {
         	SE::CModelInstance* modelinstance = new SE::CModelInstance();
@@ -666,12 +666,12 @@ bool Level::PopulateFromJson(const std::string& aFilePath)
         myNavMeshModel->SetScale({ 100,100,100 });
         myNavMeshModel->SetPosition({ 0,0,0 });*/
 
-        myDebugClickPos = new SE::CModelInstance();
-        myDebugClickPos->Init(model2);
-        myDebugClickPos->SetPosition({ -0, 0.0f, -0 });
-        myDebugClickPos->SetScale({ 0.5f,0.6f,0.5f });
-
-        myPlayerSystem.SetDebugClickPos(myDebugClickPos);
+        myDebugClickPos = SE::CModelInstance();
+        //myDebugClickPos->Init(model2);
+        myDebugClickPos.SetPosition({ -0, 0.0f, -0 });
+        myDebugClickPos.SetScale({ 0.5f,0.6f,0.5f });
+        
+        myPlayerSystem.SetDebugClickPos(&myDebugClickPos);
 
 #pragma endregion
 

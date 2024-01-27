@@ -3,6 +3,10 @@
 
 namespace SE
 {
+    CContentLoader::~CContentLoader()
+    {
+    }
+
     CFullscreenTexture CContentLoader::Load(const Vector2ui& aSize, DXGI_FORMAT aFormat)
     {
         return myTextureFactory.CreateFullscreenTexture(aSize, aFormat);

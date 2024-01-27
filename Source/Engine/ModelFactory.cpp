@@ -44,18 +44,18 @@ namespace SE
 		unsigned int flags;
 
 
-			flags = 0
-				| aiProcess_CalcTangentSpace
-				| aiProcess_Triangulate
-				| aiProcess_JoinIdenticalVertices
-				| aiProcess_SortByPType
-				| aiProcess_MakeLeftHanded
-				| aiProcess_FlipWindingOrder
-				| aiProcess_FlipUVs
-				// Caution, might lose data
-				| aiProcess_OptimizeGraph
-				| aiProcess_OptimizeMeshes;
-		
+		flags = 0
+			| aiProcess_CalcTangentSpace
+			| aiProcess_Triangulate
+			| aiProcess_JoinIdenticalVertices
+			| aiProcess_SortByPType
+			| aiProcess_MakeLeftHanded
+			| aiProcess_FlipWindingOrder
+			| aiProcess_FlipUVs
+			// Caution, might lose data
+			| aiProcess_OptimizeGraph
+			| aiProcess_OptimizeMeshes;
+
 
 		const aiScene* aiScene = importer.ReadFile(aPath.data(), flags);
 		if (!aiScene)
@@ -357,18 +357,18 @@ namespace SE
 
 
 
-			flags = 0
-				| aiProcess_CalcTangentSpace
-				| aiProcess_Triangulate
-				| aiProcess_JoinIdenticalVertices
-				| aiProcess_SortByPType
-				| aiProcess_MakeLeftHanded
-				/*| aiProcess_FlipWindingOrder*/
-				| aiProcess_FlipUVs
-				// Caution, might lose data
-				| aiProcess_OptimizeGraph
-				| aiProcess_OptimizeMeshes;
-		
+		flags = 0
+			| aiProcess_CalcTangentSpace
+			| aiProcess_Triangulate
+			| aiProcess_JoinIdenticalVertices
+			| aiProcess_SortByPType
+			| aiProcess_MakeLeftHanded
+			/*| aiProcess_FlipWindingOrder*/
+			| aiProcess_FlipUVs
+			// Caution, might lose data
+			| aiProcess_OptimizeGraph
+			| aiProcess_OptimizeMeshes;
+
 
 		const aiScene* aiScene = importer.ReadFile(aPath.data(), flags);
 		if (!aiScene)
@@ -516,13 +516,13 @@ namespace SE
 			for (unsigned vertexIndex = 0; vertexIndex < aiMesh->mNumVertices; ++vertexIndex)
 			{
 				SVertex vertex = { 0 };
-				
-					vertex.x = aiMesh->mVertices[vertexIndex].x * 1.f;
-					vertex.y = aiMesh->mVertices[vertexIndex].y * 1.f;
-					vertex.z = aiMesh->mVertices[vertexIndex].z * -1.f;
-					vertex.w = 1.0f;
-				
-				
+
+				vertex.x = aiMesh->mVertices[vertexIndex].x * 1.f;
+				vertex.y = aiMesh->mVertices[vertexIndex].y * 1.f;
+				vertex.z = aiMesh->mVertices[vertexIndex].z * -1.f;
+				vertex.w = 1.0f;
+
+
 				vertices.push_back(vertex);
 			}
 
@@ -752,6 +752,16 @@ namespace SE
 
 #include <sys/stat.h>
 #include <Engine\Animator.h>
+	CModelFactory::~CModelFactory()
+	{
+		for (auto& [path, model] : myModels)
+		{
+			delete model;
+		}
+
+		myModels.clear();
+	}
+
 	CModel* CModelFactory::GetModel(const std::string& aPath)
 	{
 		struct stat buffer;
@@ -760,18 +770,21 @@ namespace SE
 			return nullptr;
 		}
 
+		auto model = myModels.find(aPath);
+		if (model != myModels.end())
+		{
+			return model->second;
+		}
+
 		std::string ext(aPath.end() - 4, aPath.end());
 		if (ext == ".erc")
 		{
-			return myPool.Get(aPath, [this, aPath](const std::string&) -> CModel* {
-				return LoadERC(aPath);
-				});
+			return LoadERC(aPath);
 		}
-		else
+
+		if (ext == ".fbx")
 		{
-			return myPool.Get(aPath, [this, aPath](const std::string&) -> CModel* {
-				return LoadFBX(aPath);
-				});
+			return LoadFBX(aPath);
 		}
 
 		return nullptr;
@@ -865,7 +878,7 @@ namespace SE
 			printf("Material name before: \"%s\"\n", texture.c_str());
 
 			// Remove bogus character
-			while (*(texture.end()-1) < 32)
+			while (*(texture.end() - 1) < 32)
 				texture = std::string(texture.begin(), texture.end() - 1);
 
 			if (*(texture.end() - 1) == '_')
@@ -1012,6 +1025,7 @@ namespace SE
 		model->myRadius = radius;
 		model->SetPath(aPath.data());
 		//animator->AddAnimation("Models/CH_EY_Kubb/CH_EY_Kubb_Attack_AN.myr");
+		myModels[aPath] = model;
 		return model;
 	}
 }

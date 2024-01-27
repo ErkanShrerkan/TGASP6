@@ -13,6 +13,14 @@
 
 namespace SE
 {
+	CVFXFactory::~CVFXFactory()
+	{
+		for (auto& [name, vfx] : myVFXs)
+		{
+			delete vfx;
+		}
+		myVFXs.clear();
+	}
 
 	CVFX* CVFXFactory::GetVFX(std::string aVFX)
 	{
@@ -82,7 +90,7 @@ namespace SE
 			vfx->myData.push_back(data);
 		}
 
-		//myVFXs[doc["Name"].GetString()] = vfx;
+		myVFXs[doc["Name"].GetString()] = vfx;
 		return vfx;
 	}
 

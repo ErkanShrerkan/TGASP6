@@ -7,6 +7,15 @@ namespace CommonUtilities
     class KeyedPool
     {
     public:
+        ~KeyedPool() 
+        {
+            for (auto& [key, obj] : myObjects)
+            {
+                delete obj;
+            }
+            myObjects.clear();
+        }
+
         Object* Get(const Key& aKey, std::function<Object*(const Key&)> aCreateMethod)
         {
             auto position = myObjects.find(aKey);

@@ -13,6 +13,13 @@
 
 namespace SE
 {
+	CVFXRenderer::~CVFXRenderer()
+	{
+		myFrameBuffer->Release();
+		myObjectBuffer->Release();
+		myPixelShader->Release();
+		myVertexShader->Release();
+	}
 
 	bool CVFXRenderer::Init()
 	{

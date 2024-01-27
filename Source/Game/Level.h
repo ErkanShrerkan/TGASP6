@@ -75,8 +75,8 @@ private:
     NavMesh myHeightMesh;
     std::vector<SE::CModelInstance*> myPathfindDebugInstances;
     bool myShouldRenderPathfindDebug = false;
-    SE::CModelInstance* myNavMeshModel;
-    SE::CModelInstance* myDebugClickPos;
+    //SE::CModelInstance* myNavMeshModel;
+    SE::CModelInstance myDebugClickPos;
 
     //Camera for cutscenes
     SE::CCamera myCutsceneCamera;

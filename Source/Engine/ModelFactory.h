@@ -14,6 +14,7 @@ namespace SE
 	class CModelFactory
 	{
 	public:
+		~CModelFactory();
 		CModel* GetModel(const std::string& aPath);
 		CModel* CreatePrimitive(const EPrimitive& aPrimitiveType);
 		CModel* LoadNavMeshModel(const std::string& aPath);
@@ -21,7 +22,7 @@ namespace SE
 		CModel* LoadFBX(const std::string& aPath);
 		CModel* CreateCube();
 		CModel* LoadERC(const std::string& aPath);
-		CommonUtilities::KeyedPool<std::string, CModel> myPool;
+		//CommonUtilities::KeyedPool<std::string, CModel> myPool;
 		std::unordered_map<std::string, CModel*> myModels;
 		struct SVertex
 		{

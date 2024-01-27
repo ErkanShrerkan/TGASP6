@@ -12,7 +12,8 @@ namespace SE
     class CParticleFactory
     {
     private:
-        CommonUtilities::KeyedPool<std::string, CParticleEmitter> myPool;
+        //CommonUtilities::KeyedPool<std::string, CParticleEmitter> myPool;
+        std::map<std::string, CParticleEmitter*> myPool;
         ID3D11VertexShader* myVertexShader;
         ID3D11GeometryShader* myGeometryShader;
         ID3D11PixelShader* myPixelShader;
@@ -23,6 +24,7 @@ namespace SE
         void InitFactory();
 
     public:
+        ~CParticleFactory();
         CParticleEmitter* GetParticleEmitter(const std::string& aPath);
 
     private:

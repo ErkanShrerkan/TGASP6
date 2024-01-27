@@ -11,6 +11,12 @@ Matrix4x4f dinMamma;
 
 bool TextRenderer::Init()
 {
+    bool yes = true;
+
+    if (yes)
+    {
+        return true;
+    }
     dinMamma(1, 1) = 2.f;
     dinMamma(2, 2) = 2.f;
     dinMamma(3, 3) = 1.f / (10000 - 1);
@@ -85,6 +91,12 @@ bool TextRenderer::Init()
 
 void TextRenderer::Render(SE::CCamera* aCamera, const std::vector<std::shared_ptr<Text>>& someText)
 {
+    bool yes = true;
+
+    if (yes)
+    {
+        return;
+    }
     HRESULT result;
     D3D11_MAPPED_SUBRESOURCE bufferData;
 

@@ -76,6 +76,7 @@ namespace SE
         bool Init(CDirectX11Framework* aFramework);
         void RenderFrame();
         void RecieveMessage(eMessage aMsg) override;
+        ~CRenderManager();
 
     private:
         void CreateTextures();

@@ -7,6 +7,7 @@ namespace SE
     class CParticleRenderer
     {
     public:
+
         void Render(std::vector<CParticleEmitterInstance*>& someParticleEmittersInstances);
     };
 }

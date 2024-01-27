@@ -43,11 +43,23 @@ namespace SE
         myHasInited = true;
     }
 
+    CParticleFactory::~CParticleFactory()
+    {
+        myVertexShader->Release();
+        myGeometryShader->Release();
+        myPixelShader->Release();
+        myInputLayout->Release();
+    }
+
     CParticleEmitter* CParticleFactory::GetParticleEmitter(const std::string& aPath)
     {
-        return myPool.Get(aPath, [this, aPath](const std::string&) -> CParticleEmitter* {
-            return CreateParticleEmitter(aPath);
-        });
+        auto emitter = myPool.find(aPath);
+        if (emitter != myPool.end())
+        {
+            return emitter->second;
+        }
+
+        return CreateParticleEmitter(aPath);
     }
 
 #define JSON_POINTER_GET(source) \

@@ -617,6 +617,56 @@ namespace SE
 		}
 	}
 
+	CRenderManager::~CRenderManager()
+	{
+		myGBuffer.Release();
+		myWaterBuffer.Release();
+		myModelEffectBuffer.Release();
+		myReflectionBuffer.Release();
+		myMergedWaterTexture.Release();
+		myReflectionTexture.Release();
+		myScaledBackBuffer.Release();
+		myDeferredTexture.Release();
+		myIntermediateDepth.Release();
+		myIntermediateTexture.Release();
+		myHalfSizeTexture.Release();
+		myLuminanceTexture.Release();
+		myQuarterSizeTexture.Release();
+		myBlurTexture1.Release();
+		myBlurTexture2.Release();
+		myFullscreenCopy.Release();
+		myEffectTexture.Release();
+		myModelEffectTextures[0].Release();
+		myModelEffectTextures[1].Release();
+
+		for (auto& blend : myBlendStates)
+		{
+			blend->Release();
+		}
+
+		for (auto& stencil : myBlendStates)
+		{
+			stencil->Release();
+		}
+
+		for (auto& raster : myBlendStates)
+		{
+			raster->Release();
+		}
+
+		for (auto& sampler : myBlendStates)
+		{
+			sampler->Release();
+		}
+
+		myPostProcessingBuffer->Release();
+
+		myWaterAlbedo->Release();
+		myWaterMaterial->Release();
+		myWaterNormal->Release();
+		myWaterNormal2->Release();
+	}
+
 	void CRenderManager::CreateTextures()
 	{
 		Vector2ui res = DX11::GetResolution();

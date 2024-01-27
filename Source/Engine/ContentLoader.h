@@ -16,7 +16,7 @@ namespace SE
 	class CContentLoader
 	{
 	public:
-
+		~CContentLoader();
 		// Use an overloaded version of this to load desired resource
 		template <class Resource, class ...Args>
 		Resource* Load(Args... someArguments);

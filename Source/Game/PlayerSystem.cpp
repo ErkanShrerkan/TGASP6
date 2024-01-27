@@ -1155,6 +1155,7 @@ SE::SNavTriangle* PlayerSystem::FindPosToMoveTo(Vector3f& triangleIntersection, 
 {
 	aPlayerIndex;
 	Vector3f posToMoveTo;
+
 	myDebugClickPos->SetPosition(triangleIntersection);
 	myShouldMove = true;
 	triangleWasHit = true;

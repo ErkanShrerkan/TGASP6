@@ -13,10 +13,10 @@ namespace SE
 
 	CAnimationFactory::~CAnimationFactory()
 	{
-		//for (auto& [name, anim] : myAnimations)
-		//{
-		//	delete anim;
-		//}
+		for (auto& [name, anim] : myAnimations)
+		{
+			delete anim;
+		}
 	}
 
 	CAnimation* CAnimationFactory::CreateAnimation(std::string aPath)

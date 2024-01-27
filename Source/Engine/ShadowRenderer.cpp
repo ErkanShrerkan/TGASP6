@@ -16,6 +16,10 @@ namespace SE
 
 	CShadowRenderer::~CShadowRenderer()
 	{
+		myObjectBuffer->Release();
+		myFrameBuffer->Release();
+		myShadowFrameBuffer->Release();
+		myPixelShader->Release();
 	}
 
 	bool CShadowRenderer::Init()
