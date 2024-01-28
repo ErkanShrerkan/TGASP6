@@ -396,7 +396,7 @@ namespace SE
 		// object buffer
 		myGBuffer.SetAsActiveTarget(&myIntermediateDepth);
 		myDeferredRenderer.GenerateGBuffer(mainCam, modelsToRender);
-		SetRasterizerState(ERasterizerState::E_RASTERIZERSTATE_DEFAULT);
+		//SetRasterizerState(ERasterizerState::E_RASTERIZERSTATE_DEFAULT);
 
 		// pbr for object buffer
 		SetBlendState(E_BLENDSTATE_ADDITIVE);

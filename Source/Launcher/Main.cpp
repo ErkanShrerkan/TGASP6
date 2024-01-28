@@ -72,7 +72,7 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance,
 	unsigned int y = GetSystemMetrics(SM_CYSCREEN);
 	engineParameters.window.width = static_cast<int>((16.f / 9) * y);
 	engineParameters.window.height = static_cast<int>(y);
-	engineParameters.window.title = L"Spite";
+	engineParameters.window.title = L"Into the Bog";
 	engineParameters.clearColor = { 1.0f, .85f, .66f, 1.f };
 	//engineParameters.clearColor = { 64.f / 255.f, 127.f / 255.f, 1.f, 1.f };
 	engineParameters.clearColor = { .1f, .1f, .1f, 1.f };
