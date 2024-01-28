@@ -812,7 +812,7 @@ void PlayerSystem::Update()
 			myTryToPlayUnlockUltimateVFX = false;
 			clickEffect.SetPosition(myTransform->GetPosition());
 			SE::CVFXManager::GetInstance().PlayVFX("LevelUp", clickEffect);
-			myModel->animator->Play("LevelUp", false);
+			myModel->animator->Play("LevelUp", false, "Idle");
 			SE::CAudioEngine::GetInstance()->StartEventOneShot(AudioClip::Player_LevelUp);
 		}
 		myFrameDelayCount++;
@@ -1625,7 +1625,8 @@ void PlayerSystem::LmbAttackAir()
 	//Transform t;
 	//t.SetPosition(myTransform->GetPosition() - 1.f * myTransform->GetTransform().GetForward());
 	//t.GetTransform().SetRotation(myTransform->GetTransform());
-	SE::CVFXManager::GetInstance().PlayVFX("RMB", *myTransform);
+	std::string vfx = "LMB" + std::to_string(myCurrentComboIndex);
+	SE::CVFXManager::GetInstance().PlayVFX(vfx, *myTransform);
 
 	Trigger myAttackTrigger;
 	myAttackTrigger.event = TriggerEvent::Player_Ability_Lmb;
@@ -1659,7 +1660,8 @@ void PlayerSystem::LmbAttackTarget()
 		myCurrentComboIndex = 0;
 	}
 
-	SE::CVFXManager::GetInstance().PlayVFX("RMB", *myTransform);
+	std::string vfx = "LMB" + std::to_string(myCurrentComboIndex);
+	SE::CVFXManager::GetInstance().PlayVFX(vfx, *myTransform);
 	myModel->animator->Play(myComboAnims[myCurrentComboIndex], false, "Idle", false, 0.1f, 0.15f);
 	myHitAnimIsDone = false;
 	myModel->animator->SetOnOverCallback([&]()

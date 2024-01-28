@@ -5,12 +5,6 @@
 
 namespace SE
 {
-	void CVFXInstance::Release()
-	{
-		delete myVFX;
-		myVFX = nullptr;
-	}
-
 	CVFXInstance::CVFXInstance(CVFX* aVFX)
 		: myVFX(aVFX)
 	{

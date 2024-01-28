@@ -35,7 +35,6 @@ namespace SE
 			}
 			else
 			{
-				vfx.vfx->Release();
 				delete vfx.vfx;
 				vfx.vfx = nullptr;
 			}

@@ -1,0 +1,143 @@
+{
+  "Name" : "LMB2",
+  "Components": [
+    {
+      "Model": "Models/Effects/Slash.erc",
+      "Texture": "Textures/Slash.dds",
+      "FPS": 24,
+      "Frames": 6,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 2,
+          "Value": [
+            255,
+            255,
+            255,
+            800
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0.225
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            0,
+            -0.4
+          ]
+        }
+      ]
+    },
+{
+      "Model": "Models/Effects/Slash2.erc",
+      "Texture": "Textures/Slash.dds",
+      "FPS": 24,
+      "Frames": 6,
+      "ColorKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        },
+        {
+          "Frame": 2,
+          "Value": [
+            255,
+            255,
+            255,
+            800
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            255,
+            255,
+            255,
+            0
+          ]
+        }
+      ],
+      "ScaleKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            2,
+            2,
+            2
+          ]
+        }
+      ],
+      "UVKeys": [
+        {
+          "Frame": 0,
+          "Value": [
+            0,
+            0.225
+          ]
+        },
+        {
+          "Frame": 6,
+          "Value": [
+            0,
+            -0.4
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -90,7 +90,7 @@ namespace SE
 			vfx->myData.push_back(data);
 		}
 
-		//myVFXs[doc["Name"].GetString()] = vfx;
+		myVFXs[doc["Name"].GetString()] = vfx;
 		return vfx;
 	}
 

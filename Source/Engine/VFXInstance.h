@@ -8,9 +8,6 @@ namespace SE
 		friend class CVFXRenderer;
 		friend class CVFXManager;
 
-	public:
-		void Release();
-
 	private:
 		CVFX* myVFX = nullptr;
 		bool myIsDone = false;
