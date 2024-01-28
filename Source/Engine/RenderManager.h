@@ -36,6 +36,8 @@ namespace SE
             float godRaySampleDistance;
             float godRayFalloff;
             float alphaThreshold;
+            int useHDR;
+            int3 trash;
         };
 
         enum EBlendState
@@ -80,6 +82,7 @@ namespace SE
 
     private:
         void CreateTextures();
+        void ReleaseTextures();
 
         int myRenderLayer = 0;
 

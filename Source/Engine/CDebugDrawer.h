@@ -38,7 +38,7 @@ private:
 	{
 		float4 myPositionsAndRadii[Debug::maxSpheres];
 		float4 myColors[Debug::maxSpheres];
-		int myNumSpheres;
+		int myNumSpheres = 0;
 		float3 trash;
 	} mySphereBufferData;
 

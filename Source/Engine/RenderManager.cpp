@@ -234,6 +234,7 @@ namespace SE
 		myPostProcessingData.myTextureSize.y = td.Height;
 		myPostProcessingData.resolution.x = res.x;
 		myPostProcessingData.resolution.y = res.y;
+		myPostProcessingData.useHDR = USE_HDR;
 
 		//myPostProcessingData.shallowWaterColor = float3(37.f / 255, 114.f / 255, 17.f / 255);
 		//myPostProcessingData.deepWaterColor = float3(24.f / 255, 47.f / 255, 8.f / 255);
@@ -511,15 +512,31 @@ namespace SE
 			SetBlendState(E_BLENDSTATE_DISABLE);
 			SetDepthStencilState(E_DEPTHSTENCILSTATE_DEFAULT);
 
+			// tonemap
+#if USE_HDR
+			myIntermediateTexture.SetAsActiveTarget();
+			myDeferredTexture.SetAsResourceOnSlot(0);
+			myFullscreenRenderer.Render(CFullscreenRenderer::EShader_Tonemap);
+#endif
+
 			// fog
 			myFullscreenCopy.SetAsActiveTarget();
+#if USE_HDR
+			myIntermediateTexture.SetAsResourceOnSlot(0);
+#else
 			myDeferredTexture.SetAsResourceOnSlot(0);
+#endif
 			myFullscreenRenderer.Render(CFullscreenRenderer::EShader_Copy);
 			myGBuffer.SetAsResourceOnSlot(CGBuffer::E_POSITION, 2);
 			myGBuffer.SetAsResourceOnSlot(CGBuffer::E_DEPTH, 8);
 			myWaterBuffer.SetAsResourceOnSlot(CGBuffer::E_POSITION, 13);
 			myWaterBuffer.SetAsResourceOnSlot(CGBuffer::E_DEPTH, 19);
 			myFullscreenRenderer.Render(CFullscreenRenderer::EShader_Fog);
+
+			// add blur
+
+			//
+
 
 			SetBlendState(E_BLENDSTATE_DISABLE);
 			myGBuffer.SetAllAsResources(2);
@@ -577,7 +594,6 @@ namespace SE
 			}
 
 			myScaledBackBuffer.SetAsActiveTarget();
-			CDebugDrawer::GetInstance().Render();
 			//myModelEffectTextures[0].SetAsResourceOnSlot(0);
 			//myFullscreenRenderer.Render(CFullscreenRenderer::EShader_Copy);
 			myGBuffer.SetAllAsResources(2); // contains object textures
@@ -585,7 +601,12 @@ namespace SE
 			textures[!texture]->SetAsResourceOnSlot(0);
 			//myModelEffectTextures[1].SetAsResourceOnSlot(0);
 			//myModelEffectBuffer.SetAsResourceOnSlot(CGBuffer::EGBufferTexture::E_DEPTH, 0);
+#ifdef _DEBUG
+			CDebugDrawer::GetInstance().Render();
 			myFullscreenRenderer.Render(CFullscreenRenderer::EShader_DebugSpheres);
+#else
+			myFullscreenRenderer.Render(CFullscreenRenderer::EShader_Copy);
+#endif
 
 			SetBlendState(E_BLENDSTATE_ALPHABLEND);
 			myForwardRenderer.RenderSprites(scene->GetSprites());
@@ -619,25 +640,7 @@ namespace SE
 
 	CRenderManager::~CRenderManager()
 	{
-		myGBuffer.Release();
-		myWaterBuffer.Release();
-		myModelEffectBuffer.Release();
-		myReflectionBuffer.Release();
-		myMergedWaterTexture.Release();
-		myReflectionTexture.Release();
-		myScaledBackBuffer.Release();
-		myDeferredTexture.Release();
-		myIntermediateDepth.Release();
-		myIntermediateTexture.Release();
-		myHalfSizeTexture.Release();
-		myLuminanceTexture.Release();
-		myQuarterSizeTexture.Release();
-		myBlurTexture1.Release();
-		myBlurTexture2.Release();
-		myFullscreenCopy.Release();
-		myEffectTexture.Release();
-		myModelEffectTextures[0].Release();
-		myModelEffectTextures[1].Release();
+		ReleaseTextures();
 
 		for (auto& blend : myBlendStates)
 		{
@@ -672,6 +675,44 @@ namespace SE
 		Vector2ui res = DX11::GetResolution();
 		CContentLoader* const& content = CEngine::GetInstance()->GetContentLoader();
 
+		ReleaseTextures();
+
+		DXGI_FORMAT normalFormat = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
+		DXGI_FORMAT hdrFormat = normalFormat;
+
+#if USE_HDR
+		hdrFormat = DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT;
+#endif
+
+		myGBuffer = content->GetTextureFactory().CreateGBuffer(res);
+		myWaterBuffer = content->GetTextureFactory().CreateGBuffer(res);
+		myModelEffectBuffer = content->GetTextureFactory().CreateGBuffer(res);
+		myReflectionBuffer = content->GetTextureFactory().CreateGBuffer(res);
+
+		myMergedWaterTexture = content->Load(res, hdrFormat);
+		myReflectionTexture = content->Load(res, hdrFormat);
+		myDeferredTexture = content->Load(res, hdrFormat);
+		myIntermediateTexture = content->Load(res, hdrFormat);
+		myHalfSizeTexture = content->Load({ res.x / 2, res.y / 2 }, hdrFormat);
+		myLuminanceTexture = content->Load(res, hdrFormat);
+		myQuarterSizeTexture = content->Load({ res.x / 4, res.y / 4 }, hdrFormat);
+		myBlurTexture1 = content->Load(res, hdrFormat);
+		myBlurTexture2 = content->Load(res, hdrFormat);
+		myFullscreenCopy = content->Load(res, hdrFormat);
+		myEffectTexture = content->Load(res, hdrFormat);
+		myModelEffectTextures[0] = content->Load(res, normalFormat);
+		myModelEffectTextures[1] = content->Load(res, normalFormat);
+
+#ifdef _DEBUG
+		myScaledBackBuffer = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
+#else
+		myScaledBackBuffer = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM_SRGB);
+#endif 
+		myIntermediateDepth = content->GetTextureFactory().CreateFullscreenDepth(res, DXGI_FORMAT_R32_TYPELESS);
+	}
+
+	void CRenderManager::ReleaseTextures()
+	{
 		myGBuffer.Release();
 		myWaterBuffer.Release();
 		myModelEffectBuffer.Release();
@@ -691,26 +732,6 @@ namespace SE
 		myEffectTexture.Release();
 		myModelEffectTextures[0].Release();
 		myModelEffectTextures[1].Release();
-
-		myGBuffer = content->GetTextureFactory().CreateGBuffer(res);
-		myWaterBuffer = content->GetTextureFactory().CreateGBuffer(res);
-		myModelEffectBuffer = content->GetTextureFactory().CreateGBuffer(res);
-		myReflectionBuffer = content->GetTextureFactory().CreateGBuffer(res);
-		myMergedWaterTexture = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myReflectionTexture = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myScaledBackBuffer = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myDeferredTexture = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myIntermediateDepth = content->GetTextureFactory().CreateFullscreenDepth(res, DXGI_FORMAT_R32_TYPELESS);
-		myIntermediateTexture = content->Load(res, DXGI_FORMAT_R8G8B8A8_UNORM);
-		myHalfSizeTexture = content->Load({ res.x / 2, res.y / 2 }, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myLuminanceTexture = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myQuarterSizeTexture = content->Load({ res.x / 4, res.y / 4 }, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myBlurTexture1 = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myBlurTexture2 = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myFullscreenCopy = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myEffectTexture = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myModelEffectTextures[0] = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
-		myModelEffectTextures[1] = content->Load(res, DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM);
 	}
 
 	void CRenderManager::SetBlendState(EBlendState aBlendState)

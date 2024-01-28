@@ -109,7 +109,7 @@ namespace Game
 
 	void Game::DisplayImGui()
 	{
-#ifdef DEBUG
+#ifdef _DEBUG
 		if (ImGui::BeginMainMenuBar())
 		{
 			if (ImGui::BeginMenu("F1 Menu"))

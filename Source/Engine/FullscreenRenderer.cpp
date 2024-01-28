@@ -34,6 +34,7 @@ namespace SE
 		shaderPaths[EShader_AdditiveBlend     ] = "Shaders/FullscreenPS-AdditiveBlend";
         shaderPaths[EShader_Outline           ] = "Shaders/FullscreenPS-Outline";
         shaderPaths[EShader_Highlight         ] = "Shaders/FullscreenPS-Highlight";
+        shaderPaths[EShader_Tonemap           ] = "Shaders/FullscreenPS-Tonemap";
         for (uint i = 0u; i < EShader_Count; ++i)
         {
             Helper::ShaderHelper::CreatePixelShader(&myPixelShaders[i], shaderPaths[i]);

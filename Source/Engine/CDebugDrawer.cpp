@@ -11,7 +11,7 @@ void CDebugDrawer::Init()
 
 void CDebugDrawer::DrawSphere([[maybe_unused]]float3 aPos, [[maybe_unused]] float aRadius, [[maybe_unused]] float4 aColor)
 {
-#ifdef DEBUG
+#ifdef _DEBUG
 	if (myIndex < Debug::maxSpheres)
 	{
 		float4 posAndRadius({ aPos.x, aPos.y, aPos.z, aRadius});
@@ -24,7 +24,7 @@ void CDebugDrawer::DrawSphere([[maybe_unused]]float3 aPos, [[maybe_unused]] floa
 
 void CDebugDrawer::Render()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
 	if (Input::GetInputPressed(eButtonInput::Up))
 	{
 		myShouldRender = !myShouldRender;

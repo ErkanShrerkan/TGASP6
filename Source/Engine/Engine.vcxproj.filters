@@ -581,6 +581,9 @@
     <FxCompile Include="ParticleGeometryShader.hlsl">
       <Filter>Source Files\Engine\Shader</Filter>
     </FxCompile>
+    <FxCompile Include="FullscreenPS-Tonemap.hlsl">
+      <Filter>Source Files\Engine\Shader\Effects\Post Processing</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="ShaderStructs.hlsli">

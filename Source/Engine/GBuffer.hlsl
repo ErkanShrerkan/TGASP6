@@ -16,6 +16,7 @@ GBufferOutput main(VertexToPixel_GBuffer input)
 {
     float2 scaledUV = input.myUV * OBD_UVScale;
     float4 albedo = objAlbedoTexture.Sample(wrapSampler, scaledUV).rgba;
+    albedo.rgb = PPBD_useHDR ? GammaToLinear(albedo.rgb) : albedo.rgb;
     if (albedo.a < PPBD_alphaThreshold / 100)
     {
         discard;

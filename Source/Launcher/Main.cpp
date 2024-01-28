@@ -7,7 +7,7 @@
 #include "Engine/Input.h"
 #include <Game/UIManager.h>
 #include <Game/UIElement.h>
-#define USE_PIX 1
+#define USE_PIX 0
 #include "pix3.h"
 #include <Engine\DX11.h>
 #include <Engine\GraphicsEngine.h>
@@ -15,6 +15,8 @@
 #include <Engine\SplashScreen.h>
 
 using namespace CommonUtilities;
+
+#define SPLASH 0
 
 #include <fcntl.h>
 void InitConsoleToFile()
@@ -101,6 +103,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance,
 	timer.Update();
 
 #ifdef _RELEASE
+	#define SPLASH 0
+#endif // _RELEASE
+
+#if SPLASH
 	SplashScreen* ss = new SplashScreen();
 	bool isSplashing = true;
 	while (isSplashing)

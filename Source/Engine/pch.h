@@ -4,6 +4,8 @@
 // However, files listed here are ALL re-compiled if any one of them is updated between builds.
 // Do not add files here that you will be updating frequently as this negates the performance advantage.
 
+#define USE_HDR 0
+
 #ifndef PCH_H
 #define PCH_H
 
@@ -29,6 +31,7 @@ struct UnusedSpace
 #define pend SE::Debug::CDebugConsole::EConsoleStream::EndStream
 #define pwarn pout
 #define perr pout
+
 // ^^ perror is taken in <tchar.h>
 
 // Indicates that this pointer is not owned by this object

@@ -162,6 +162,8 @@ cbuffer PostProcessingBuffer_Fullscreen : register(b3)
     float PPBD_godRaySampleDistance;
     float PPBD_godRayFalloff;
     float PPBD_alphaThreshold;
+    int PPBD_useHDR;
+    int3 PPBD_trash;
 }
 
 cbuffer SpriteObjectBuffer_Sprite : register(b0)

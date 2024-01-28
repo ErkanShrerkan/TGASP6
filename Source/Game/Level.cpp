@@ -198,22 +198,22 @@ void Level::Init(Experience* anExperienceComponent, const bool& aFromLevelSelect
 void Level::Update()
 {
     ENGINE->GetActiveScene()->GetMainCamera()->Update(SE::CEngine::GetInstance()->GetDeltaTime());
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXBeginEvent(PIX_COLOR_INDEX(2), __FUNCTION__);
     PIXBeginEvent(PIX_COLOR_INDEX(3), "TriggerSystem::DeleteDeadTriggers");
 #endif // DEBUG
     myTriggerSystem.DeleteDeadTriggers();
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "CollisionSystem::CheckCollisions");
 #endif // DEBUG
     myCollisionSystem.CheckCollisions(myTriggerSystem);
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "TriggerSystem::DistributeEvents");
 #endif // DEBUG
     myTriggerSystem.DistributeEvents();
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "LightEnemySystem::Update");
 #endif // DEBUG
@@ -221,7 +221,7 @@ void Level::Update()
     {
         myEnemySystem.Update();
     }
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "PlayerSystem::Update");
 #endif // DEBUG
@@ -235,43 +235,43 @@ void Level::Update()
     }
 
 
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
 #endif // DEBUG
     if (myIndex == 4)
     {
-#ifdef DEBUG
+#ifdef _DEBUG
         PIXBeginEvent(PIX_COLOR_INDEX(3), "BossSystem::Update");
 #endif // DEBUG
 
         myBossSystem.Update(myTriggerSystem);
         
-#ifdef DEBUG
+#ifdef _DEBUG
         PIXEndEvent();
 #endif // DEBUG
     }
    
     if (myIndex == 2)
     {
-#ifdef DEBUG
+#ifdef _DEBUG
         PIXBeginEvent(PIX_COLOR_INDEX(3), "MinibossSystem::Update");
 #endif // DEBUG
 
         myMinibossSystem.Update();
 
-#ifdef DEBUG
+#ifdef _DEBUG
         PIXEndEvent();
 #endif // DEBUG
     }
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXBeginEvent(PIX_COLOR_INDEX(3), "AnimationSystem::Update");
 #endif // DEBUG
 	myAnimationSystem.Update(SE::CEngine::GetInstance()->GetDeltaTime());
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
 #endif // DEBUG
 
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXBeginEvent(PIX_COLOR_INDEX(3), "SE::CAudioEngine::Update");
 #endif // DEBUG
     Transform transform;
@@ -285,44 +285,44 @@ void Level::Update()
     transform.SetPosition(transform.GetPosition()*myListenerDistance + SE::CEngine::GetInstance()->GetActiveScene()->GetMainCamera()->GetRenderOffset() + dif.GetNormalized() * myListenerOffset);
     myAudiosystem->Update(transform, true);
 
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "Level::RenderDebugNavMesh");
 #endif // DEBUG
 
     RenderDebugNavMesh();
 
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "DialogSystem::Update");
 #endif // DEBUG
 
     myDialogSystem.Update();
 
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
 #endif // DEBUG
 
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXBeginEvent(PIX_COLOR_INDEX(3), "ModelRenderSystem::Render");
 #endif // DEBUG
     myModelRenderSystem.Render();
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "LightSystem::Render");
 #endif // DEBUG
     myLightSystem.Render();
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "ParticleSystem::Update");
 #endif // DEBUG
     myParticleSystem.Update();
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "ParticleSystem::Render");
 #endif // DEBUG
     myParticleSystem.Render();
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXEndEvent();
     PIXEndEvent();
 #endif // DEBUG
@@ -479,10 +479,26 @@ bool Level::PopulateFromJson(const std::string& aFilePath)
 
             BaseLight* pointLight = new BaseLight();
             if (name == "Flicker")
+            {
+#if USE_HDR
+                lightRange = 750.f;
+                lightIntensity = 5.f;
+#endif
                 pointLight->SetAsFlicker();
+            }
+#if USE_HDR
+            else
+            {
+                lightRange *= 40.0f;
+                lightIntensity *= 5.f;
+            }
+#else
+                lightRange *= 100.0f;
+                lightIntensity *= 10.f;
+#endif
             pointLight->SetColor(lightColor);
-            pointLight->SetIntensity(lightIntensity * 10.0f);
-            pointLight->SetRange(lightRange * 100.0f);
+            pointLight->SetIntensity(lightIntensity /* *10.0f*/);
+            pointLight->SetRange(lightRange /** 100.0f*/);
             pointLight->SetPosition(position * 100.0f);
 
             Entity entity = myCoordinator.CreateEntity();

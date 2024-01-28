@@ -161,7 +161,11 @@ namespace SE
 	{
 		DXGI_SWAP_CHAIN_DESC swapChainDescription = {};
 		swapChainDescription.BufferCount = 1;
+#if USE_HDR
+		swapChainDescription.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+#else
 		swapChainDescription.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+#endif 
 		swapChainDescription.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		swapChainDescription.OutputWindow = aWindowHandler->GetWindowHandle();
 		swapChainDescription.SampleDesc.Count = 1;	
@@ -203,8 +207,8 @@ namespace SE
 
 	void CDirectX11Framework::EndFrame()
 	{
-		//mySwapChain->Present(1, 0); // vSync
-		mySwapChain->Present(0, 0);
+		mySwapChain->Present(1, 0); // vSync
+		//smySwapChain->Present(0, 0);
 	}
 
 	ID3D11DeviceContext *const& CDirectX11Framework::GetContext() const

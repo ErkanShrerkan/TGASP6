@@ -7,6 +7,7 @@ PixelOutput_Sprite main(VertexToPixel_Sprite input)
     
     float mask = maskTexture.Sample(defaultSampler, input.myRectUV).r;
     color.rgb = mySpriteIsGamma ? LinearToGamma(color.rgb) : color.rgb;
+    color.rgb = PPBD_useHDR ? GammaToLinear(color.rgb) : color.rgb;
     color.rgb = color.rgb * mask;
     color.a *= mask;
     

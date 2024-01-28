@@ -31,14 +31,14 @@ void GameWorld::Init(SE::CCamera* aCamera)
 
 void GameWorld::Update()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
     PIXBeginEvent(PIX_COLOR_INDEX(1), __FUNCTION__);
 #endif // DEBUG
 
     myLevelHandler.UpdateActiveLevel();
     //myVignette->Render();
 
-#ifdef DEBUG
+#ifdef _DEBUG
     myParticleEditor.OnImGui();
     PIXEndEvent();
 #endif // DEBUG

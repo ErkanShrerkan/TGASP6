@@ -15,13 +15,13 @@ float3 EvaluateDirectionalLight(float3 albedoColor, float3 specularColor, float3
     float3 cDiff = Diffuse(albedoColor);
     float3 cSpec = Specular(specularColor, h, viewDir, lightDir, a, NdL, NdV, NdH, VdH, LdV);
 
-    return saturate(lightColor * lambert * (cDiff * (1.0f - cSpec) + cSpec) * PI);
+    return max(lightColor * lambert * (cDiff * (1.0f - cSpec) + cSpec) * PI, 0);
 }
 
 float3 EvaluateAmbience(TextureCube lysBurleyCube, float3 vN, float3 org_normal, float3 to_cam, float perceptualRoughness, float metalness, float3 albedo, float ao, float3 dfcol, float3 spccol)
 {
     int numMips = GetNumMips(lysBurleyCube);
-    const int nrBrdfMips = numMips - MIP_OFFSET;
+    const int nrBrdfMips = numMips + 2 * MIP_OFFSET;
     float VdotN = clamp(dot(to_cam, vN), 0.0, 1.0f);
     const float3 vRorg = 2 * vN * VdotN - to_cam;
 
@@ -30,8 +30,8 @@ float3 EvaluateAmbience(TextureCube lysBurleyCube, float3 vN, float3 org_normal,
 
     float l = BurleyToMip(perceptualRoughness, numMips, RdotNsat);
 
-    float3 specRad = lysBurleyCube.SampleLevel(defaultSampler, vR, l).xyz;
-    float3 diffRad = lysBurleyCube.SampleLevel(defaultSampler, vN, (float) (nrBrdfMips - 1)).xyz;
+    float3 specRad = lysBurleyCube.SampleLevel(defaultSampler, vR, l + MIP_OFFSET).xyz;
+    float3 diffRad = lysBurleyCube.SampleLevel(defaultSampler, vN, (float) (nrBrdfMips - 1) + 2*MIP_OFFSET).xyz;
 
     float fT = 1.0 - RdotNsat;
     float fT5 = fT * fT;
@@ -45,7 +45,7 @@ float3 EvaluateAmbience(TextureCube lysBurleyCube, float3 vN, float3 org_normal,
 
     float3 ambientdiffuse = ao * dfcol * diffRad;
     float3 ambientspecular = fFade * spccol * specRad;
-    return ambientdiffuse + ambientspecular;
+    return max(ambientdiffuse + ambientspecular, 0);
 }
 
 float3 EvaluatePointLight(float3 albedo, float3 specular, float3 normal, float roughness,
@@ -66,14 +66,24 @@ float3 EvaluatePointLight(float3 albedo, float3 specular, float3 normal, float r
 
     float3 cDiff = Diffuse(albedo);
     float3 cSpec = Specular(specular, h, viewDir, lightDir, a, NdL, NdV, NdH, VdH, LdV);
-    
+
+    if(PPBD_useHDR)
+    {
+	    float linAtt = lightDistance / lightRange;
+	    linAtt = saturate(1 - linAtt);
+	    //lightDistance /= 100.f;
+	    //float physicalAttenuation = saturate(1.f / (lightDistance * lightDistance));
+	    float attenuation = lambert * linAtt /* physicalAttenuation*/;
+        return max(lightColor * lightIntensity * attenuation * ((cDiff * (1.0 - cSpec) + cSpec) * PI), 0);
+    }
+
     lightDistance /= 100.f;
     float linearAttenuation = 1.0 / (lightDistance * lightDistance);
     linearAttenuation = saturate(linearAttenuation);
     float physicalAttenuation = saturate(1.0 / (lightDistance * lightDistance));
     float attenuation = lambert * linearAttenuation /** physicalAttenuation*/;
 
-    return saturate(lightColor * lightIntensity * attenuation * ((cDiff * (1.0 - cSpec) + cSpec) * PI));
+	return max(lightColor * lightIntensity * attenuation * ((cDiff * (1.0 - cSpec) + cSpec) * PI), 0);
 }
 
 float3 EvaluateSpotLight(float3 albedo, float3 specular, float3 normal,
@@ -105,15 +115,25 @@ float3 EvaluateSpotLight(float3 albedo, float3 specular, float3 normal,
     float intensity = clamp((theta - cosOuterAngle) / epsilon, 0.0f, 1.0f);
     intensity *= intensity;
 
+    if(PPBD_useHDR)
+    {
+	    float linAtt = lightDistance / lightRange;
+	    linAtt = saturate(1 - linAtt);
+	    lightDistance /= 100.f;
+	    float physicalAttenuation = saturate(1.f / (lightDistance * lightDistance));
+	    float attenuation = lambert * linAtt * physicalAttenuation;
+	    float finalAttenuation = lambert * intensity * attenuation;
+        return max(lightColor * lightIntensity * finalAttenuation * ((cDiff * (1.0 - cSpec) + cSpec) * PI), 0);
+    }
+
     float linearAttenuation = lightDistance / lightRange;
     linearAttenuation = 1.0f / linearAttenuation;
     linearAttenuation = saturate(linearAttenuation);
     float physicalAttenuation = saturate(1.f / (lightDistance * lightDistance));
     float attenuation = lambert * linearAttenuation * physicalAttenuation;
-
     float finalAttenuation = lambert * intensity * attenuation;
 
-    return saturate(lightColor * lightIntensity * finalAttenuation * ((cDiff * (1.0 - cSpec) + cSpec) * PI));
+	return max(lightColor * lightIntensity * finalAttenuation * ((cDiff * (1.0 - cSpec) + cSpec) * PI), 0);
 }
 
 PixelOutput_Fullscreen EnvironmentLight(VertexToPixel_Fullscreen input)
@@ -144,10 +164,20 @@ PixelOutput_Fullscreen EnvironmentLight(VertexToPixel_Fullscreen input)
     float3 specular = lerp((float3) 0.04, albedo, metalness);
     float3 diffuse = lerp((float3) 0.00, albedo, 1 - metalness);
 
+	float3 directionalLight = EvaluateDirectionalLight(
+		diffuse,
+		specular,
+		normal,
+		roughness,
+		LBD_myColor.rgb,
+		LBD_myDirection.xyz,
+		toEye.xyz);
+    directionalLight = max(directionalLight * LBD_myColor.a * (PPBD_useHDR ? 2 : 1), 0);
+    
     float3 ambience = EvaluateAmbience(
         environmentTexture,
-        normal,
         vertexNormal,
+        normal,
         toEye,
         roughness,
         metalness,
@@ -156,19 +186,8 @@ PixelOutput_Fullscreen EnvironmentLight(VertexToPixel_Fullscreen input)
         diffuse,
         specular
     );
-    ambience *= LBD_myPosition.rgb;
-    
-    float3 directionalLight = EvaluateDirectionalLight(
-        diffuse,
-        specular,
-        normal,
-        roughness,
-        LBD_myColor.rgb,
-        LBD_myDirection.xyz,
-        toEye.xyz
-    );
-    ambience *= LBD_myPosition.a;
-    directionalLight *= LBD_myColor.a;
+    ambience.rgb *= LBD_myPosition.rgb;
+    ambience = max(ambience * LBD_myPosition.a * (PPBD_useHDR ? 2 : 1), 0);
     
     int nInShadow = 0;
     float pixelX = (1.f / 1920.f);
@@ -228,7 +247,7 @@ PixelOutput_Fullscreen EnvironmentLight(VertexToPixel_Fullscreen input)
     float3 emissive = albedo * emissiveMask /** 256*/;
     float3 radiance = ambience + directionalLight + emissive;
     
-    output.myColor.rgb = LinearToGamma(radiance);
+    output.myColor.rgb = PPBD_useHDR ? radiance : LinearToGamma(radiance);
     output.myColor.a = 1.0f;
     return output;
 }

@@ -39,7 +39,7 @@ void ParticleEditor::Init(const std::string& aConfigFile)
 
 void ParticleEditor::OnImGui()
 {
-#ifdef DEBUG
+#ifdef _DEBUG
 
 
     if (ImGui::BeginMainMenuBar())

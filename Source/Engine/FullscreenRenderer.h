@@ -24,6 +24,7 @@ namespace SE
             EShader_AdditiveBlend,
             EShader_Outline,
             EShader_Highlight,
+            EShader_Tonemap,
 
 
             // Keep last, don't remove
