@@ -20,7 +20,14 @@ GBufferOutput main(VertexToPixel_GBuffer input)
     }
     
     float2 scaledUV = input.myUV * OBD_UVScale;
-    float3 albedo = GammaToLinear(objAlbedoTexture.Sample(defaultSampler, scaledUV).rgb);
+    float4 albedo = objAlbedoTexture.Sample(defaultSampler, scaledUV);
+
+    if(albedo.a < .5)
+    {
+        discard;
+    }
+
+    albedo.rgb = GammaToLinear(albedo.rgb);
     float3 normal = objNormalTexture.Sample(defaultSampler, scaledUV).wyz;
     float ambientOcclusion = normal.b;
     
@@ -42,7 +49,7 @@ GBufferOutput main(VertexToPixel_GBuffer input)
     GBufferOutput output;
     
     output.myWorldPosition = input.myWorldPosition;
-    output.myAlbedo = float4(albedo, 1);
+    output.myAlbedo = float4(albedo.rgb, 1);
     output.myNormal = float4(pixelNormal, 0);
     output.myVertexNormal = float4(input.myNormal.xyz, 1);
     output.myMaterial = material;

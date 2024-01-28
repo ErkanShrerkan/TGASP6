@@ -70,6 +70,7 @@ void StateStack::RecieveMessage(eMessage aMsg)
 		if (GameWorld::GetInstance()->GetLevelHandler().GetActiveLevelIndex() == 0)
 		{
 			PushState(eStateID::Cutscene);
+			GetCutscene()->ForceStopCutscene();
 			GetCutscene()->PlayCutscene(eCutscenes::Intro);
 		}
 		break;
@@ -117,6 +118,7 @@ void StateStack::RecieveMessage(eMessage aMsg)
 
 			PushState(eStateID::Playing);
 			PushState(eStateID::Cutscene);
+			GetCutscene()->ForceStopCutscene();
 			GetCutscene()->PlayCutscene(eCutscenes::Intro);
 		}
 		//load level

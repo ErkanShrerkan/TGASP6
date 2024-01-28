@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include <vector>
 #include <CommonUtilities/Math/Quaternion.h>
+#include <Engine\Stopwatch.h>
 
 namespace SE
 {
@@ -24,7 +25,6 @@ enum class eCutscenes
 };
 class UIElement;
 class UIDialog;
-class Stopwatch;
 class StateCutscene :
     public State
 {
@@ -36,7 +36,7 @@ public:
     void PlayCutscene(eCutscenes aCutscene);
     void AddCutsceneKeyframe(eCutscenes aCutscene, Transform aTransform);
     void Reset();
-    
+    void ForceStopCutscene();
 
 private:
     void UpdateCutscene();
@@ -47,6 +47,7 @@ private:
     void BlackscreenUpdate();
     void ReverseBlackscreenUpdate();
     void BeginEnding();
+    void UpdateActiveCutscene();
 
     std::map<eCutscenes, std::vector<Quaternion>> myCutsceneCameraQuaternions;
     std::map<eCutscenes, std::vector<Vector3f>> myCutsceneCameraPositions;
@@ -69,13 +70,13 @@ private:
     UIElement* myBlackbarDown;
     UIElement* myBlackscreen;
     UIElement* myCredits;
-    Stopwatch* myCutsceneStopwatch;
-    Stopwatch* myBlackbarsStopwatch;
-    Stopwatch* myBlackscreenStopwatch;
-    Stopwatch* mySecondBlackscreenStopwatch;
-    Stopwatch* myCreditsStopwatch;
-    Stopwatch* myStartCreditsWait;
-    Stopwatch* myCreditsDoneStopwatch;
+    Stopwatch myCutsceneStopwatch;
+    Stopwatch myBlackbarsStopwatch;
+    Stopwatch myBlackscreenStopwatch;
+    Stopwatch mySecondBlackscreenStopwatch;
+    Stopwatch myCreditsStopwatch;
+    Stopwatch myStartCreditsWait;
+    Stopwatch myCreditsDoneStopwatch;
     SE::CCamera* myCamera;
     eCutscenes myCurrentCutscene;
 };

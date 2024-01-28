@@ -1659,6 +1659,7 @@ void PlayerSystem::LmbAttackTarget()
 		myCurrentComboIndex = 0;
 	}
 
+	SE::CVFXManager::GetInstance().PlayVFX("RMB", *myTransform);
 	myModel->animator->Play(myComboAnims[myCurrentComboIndex], false, "Idle", false, 0.1f, 0.15f);
 	myHitAnimIsDone = false;
 	myModel->animator->SetOnOverCallback([&]()

@@ -263,7 +263,13 @@ void Level::Update()
         PIXEndEvent();
 #endif // DEBUG
     }
+
 #ifdef _DEBUG
+    PIXBeginEvent(PIX_COLOR_INDEX(3), "ModelRenderSystem::Render");
+#endif // DEBUG
+    myModelRenderSystem.Render();
+#ifdef _DEBUG
+    PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "AnimationSystem::Update");
 #endif // DEBUG
 	myAnimationSystem.Update(SE::CEngine::GetInstance()->GetDeltaTime());
@@ -304,11 +310,6 @@ void Level::Update()
 #endif // DEBUG
 
 #ifdef _DEBUG
-    PIXBeginEvent(PIX_COLOR_INDEX(3), "ModelRenderSystem::Render");
-#endif // DEBUG
-    myModelRenderSystem.Render();
-#ifdef _DEBUG
-    PIXEndEvent();
     PIXBeginEvent(PIX_COLOR_INDEX(3), "LightSystem::Render");
 #endif // DEBUG
     myLightSystem.Render();

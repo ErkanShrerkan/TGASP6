@@ -6,12 +6,17 @@
 #include <Engine/Camera.h>
 #include <Engine/Scene.h>
 #include <Engine/Animator.h>
+#include "UIManager.h"
+#include "StateStack.h"
 
 void ModelRenderSystem::Render()
 {
 	auto& engine = *SE::CEngine::GetInstance();
 	float dt = engine.GetDeltaTime();
 	auto& scene = engine.GetActiveScene();
+
+	bool paused = Singleton<UIManager>().GetStateStack().GetCurrentState().GetStateID() == eStateID::Pause;
+
 	for (const Entity& entity : myEntities)
 	{
 		auto& transform = myCoordinator->GetComponent<Transform>(entity);
@@ -23,18 +28,20 @@ void ModelRenderSystem::Render()
 		)*/
 		{
 			auto& collection = myCoordinator->GetComponent<ModelCollection>(entity);
-			if (collection.animator &&
-				scene->GetMainCamera()->PassesCulling(
-					position, collection.model->GetRadius()
-			))
+			if (!paused)
 			{
-				// Add bool that delays updating the animation
-				collection.animator->Update(dt);
+				if (collection.animator &&
+					scene->GetMainCamera()->PassesCulling(
+						position, collection.model->GetRadius()))
+				{
+					// Add bool that delays updating the animation
+					collection.animator->Update(dt);
+				}
 			}
 			scene->AddInstance(&collection, transform.GetTransform(), transform.GetScale());
 		}
 
 		// TODO: Cull Models
-		
+
 	}
 }

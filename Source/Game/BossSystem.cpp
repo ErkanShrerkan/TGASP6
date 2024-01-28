@@ -206,6 +206,11 @@ void BossSystem::SetNpcReference(Entity anNpc)
 
 void BossSystem::Update(TriggerSystem& aTriggerSystem)
 {
+    if (Singleton<UIManager>().GetStateStack().GetCurrentState().GetStateID() == eStateID::Pause)
+    {
+        return;
+    }
+
     myIdleAudio.Update(myTransform->GetPosition(), true);
    /* float bossHealth = myHpComponent->GetHealth() / myStartHpAmount * 100.0f;
     myAudioSystem->UpdateMusicParameter("BossHealth", bossHealth);*/

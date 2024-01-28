@@ -149,6 +149,15 @@ namespace SE
 		result = device->CreateRasterizerState(&reflectionDesc, &myRasterizerStates[E_RASTERIZERSTATE_CULLFRONT]);
 		assert(SUCCEEDED(result));
 
+		D3D11_RASTERIZER_DESC noneDesc = {};
+		noneDesc.FillMode = D3D11_FILL_SOLID;
+		noneDesc.CullMode = D3D11_CULL_NONE; 
+		noneDesc.FrontCounterClockwise = true;
+		noneDesc.DepthClipEnable = true;
+		noneDesc.AntialiasedLineEnable = true;
+		result = device->CreateRasterizerState(&noneDesc, &myRasterizerStates[E_RASTERIZERSTATE_CULLNONE]);
+		assert(SUCCEEDED(result));
+
 		myRasterizerStates[E_RASTERIZERSTATE_DEFAULT] = nullptr;
 
 		D3D11_SAMPLER_DESC pointSampleDesc = {};
@@ -356,11 +365,13 @@ namespace SE
 		}
 
 		// reflection buffer
+		SetRasterizerState(ERasterizerState::E_RASTERIZERSTATE_CULLNONE);
 		mainCam->SetTransform(mirroredCamMat);
 		myReflectionBuffer.SetAsActiveTarget(&myIntermediateDepth);
 		myDeferredRenderer.GenerateReflectionBuffer(mainCam, modelsToRender);
 		mainCam->SetTransform(orgCamMat);
 		myIntermediateDepth.ClearDepth();
+		SetRasterizerState(ERasterizerState::E_RASTERIZERSTATE_DEFAULT);
 
 		// pbr for reflections
 		SetBlendState(E_BLENDSTATE_ADDITIVE);
@@ -381,7 +392,7 @@ namespace SE
 		// Orignal culling
 		//D3D11_CULL_MODE::D3D11_CULL_BACK;
 
-		//SetRasterizerState(ERasterizerState::E_RASTERIZERSTATE_WIREFRAME);
+		//SetRasterizerState(ERasterizerState::E_RASTERIZERSTATE_CULLFRONT);
 		// object buffer
 		myGBuffer.SetAsActiveTarget(&myIntermediateDepth);
 		myDeferredRenderer.GenerateGBuffer(mainCam, modelsToRender);
@@ -687,10 +698,10 @@ namespace SE
 		myGBuffer = content->GetTextureFactory().CreateGBuffer(res);
 		myWaterBuffer = content->GetTextureFactory().CreateGBuffer(res);
 		myModelEffectBuffer = content->GetTextureFactory().CreateGBuffer(res);
-		myReflectionBuffer = content->GetTextureFactory().CreateGBuffer(res);
+		myReflectionBuffer = content->GetTextureFactory().CreateGBuffer({ res.x / 2, res.y / 2 });
 
 		myMergedWaterTexture = content->Load(res, hdrFormat);
-		myReflectionTexture = content->Load(res, hdrFormat);
+		myReflectionTexture = content->Load({ res.x / 2, res.y / 2 }, hdrFormat);
 		myDeferredTexture = content->Load(res, hdrFormat);
 		myIntermediateTexture = content->Load(res, hdrFormat);
 		myHalfSizeTexture = content->Load({ res.x / 2, res.y / 2 }, hdrFormat);
