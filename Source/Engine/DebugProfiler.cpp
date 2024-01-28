@@ -7,7 +7,7 @@
 
 #include "Engine.h"
 
-#if 1
+#ifdef _DEBUG
 #define PROFILER
 #endif // 1
 
@@ -55,13 +55,16 @@ namespace SE
 
 		void CDebugProfiler::BeginCapture()
 		{
+#ifdef PROFILER
 			myFirstTime = myClock.now();
 			myDrawCallCountSum += myDrawCallCount;
 			myDrawCallCount = 0;
+#endif 
 		}
 
 		void CDebugProfiler::EndCapture()
 		{
+#ifdef PROFILER
 			float deltaTime = std::chrono::duration<float>(myClock.now() - myFirstTime).count();
 			myTotalFrameTime += deltaTime;
 			myFrameCounter += 1.f;
@@ -99,13 +102,12 @@ namespace SE
 				myAverageDrawCalls.Push(static_cast<float>(myDrawCallCountSum) * oneDividedByFrameCounter);
 				myDrawCallCountSum = 0;
 			}
+#endif 
 		}
 
 		void CDebugProfiler::Render()
 		{
 #ifdef PROFILER
-
-
 			ImGui::SetNextWindowSize(ImVec2(350, 675), ImGuiCond_FirstUseEver);
 			if (ImGui::Begin("Profiler##prf", 0, ImGuiWindowFlags_NoScrollbar))
 			{
@@ -163,7 +165,9 @@ namespace SE
 		}
 		void CDebugProfiler::IncrementDrawCallCount()
 		{
+#ifdef PROFILER
 			++myDrawCallCount;
+#endif // PROFILER
 		}
 	}
 }

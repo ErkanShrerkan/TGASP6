@@ -16,8 +16,6 @@
 
 using namespace CommonUtilities;
 
-#define SPLASH 0
-
 #include <fcntl.h>
 void InitConsoleToFile()
 {
@@ -103,10 +101,10 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance,
 	timer.Update();
 
 #ifdef _RELEASE
-	#define SPLASH 0
+	#define SPLASH
 #endif // _RELEASE
 
-#if SPLASH
+#ifdef SPLASH
 	SplashScreen* ss = new SplashScreen();
 	bool isSplashing = true;
 	while (isSplashing)

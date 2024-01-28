@@ -406,7 +406,7 @@ void PlayerSystem::Update()
 		myModel->color.a = 1;
 	}
 #endif // _DEBUG
-	
+
 	//EXPOSE VARIABLES LOL
 	myAbilityCooldowns[static_cast<int>(Abilities::HEAL)]->SetTimeInterval(healCooldown);
 	myAbilityCooldowns[static_cast<int>(Abilities::AOE)]->SetTimeInterval(aoeCooldown);
@@ -494,7 +494,7 @@ void PlayerSystem::Update()
 	{
 		MousePickingAndMove(GetMouseRay(), false);
 	}
-	
+
 	Vector3f mouseRay = GetMouseRay();
 
 	Vector3f p0 = myCamera->GetPosition() + myCamera->GetRenderOffset();
@@ -797,7 +797,7 @@ void PlayerSystem::Update()
 
 
 	myCamera->SetRenderOffset(myTransform->GetPosition());
-	
+
 
 
 
@@ -1003,7 +1003,7 @@ void PlayerSystem::MousePicking()
 		}
 	}
 
-	
+
 }
 
 Vector3f PlayerSystem::GetMouseRay()
@@ -1092,63 +1092,70 @@ bool PlayerSystem::MousePickingAndMove(const Vector3f& aRay, const bool& aShowCl
 			}
 		}
 	}
-	if (trianglesHit.size() > 0)
+	if (trianglesHit.size() == 0)
 	{
-		if (myCurrentMapLevelIndex < 4 || myLmbTarget == nullptr)
+		return false;
+	}
+	if (myCurrentMapLevelIndex >= 4 && myLmbTarget != nullptr)
+	{
+		return false;
+	}
+
+	SE::SNavTriangle* nearestTriangle = trianglesHit[0];
+	Vector3f playerPos = { myTransform->GetPosition().x, myTransform->GetPosition().y, myTransform->GetPosition().z };
+	float shortestDistanceToTriangle = (nearestTriangle->myCentroid - playerPos).LengthSqr();
+	for (size_t i = 1; i < trianglesHit.size(); i++)
+	{
+		float distanceToTriangle = (trianglesHit[i]->myCentroid - playerPos).LengthSqr();
+		if (distanceToTriangle < shortestDistanceToTriangle)
 		{
-		SE::SNavTriangle* nearestTriangle = trianglesHit[0];
-		Vector3f playerPos = { myTransform->GetPosition().x, myTransform->GetPosition().y, myTransform->GetPosition().z };
-		float shortestDistanceToTriangle = (nearestTriangle->myCentroid - playerPos).LengthSqr();
-		for (size_t i = 1; i < trianglesHit.size(); i++)
-		{
-			float distanceToTriangle = (trianglesHit[i]->myCentroid - playerPos).LengthSqr();
-			if (distanceToTriangle < shortestDistanceToTriangle)
-			{
-				nearestTriangle = trianglesHit[i];
-			}
-		}
-
-
-		unsigned int playerIndex;
-		SE::SNavTriangle* triangleToMoveTo = FindPosToMoveTo(triangleIntersection, triangleWasHit, nearestTriangle, playerIndex);
-
-		CDebugDrawer::GetInstance().DrawSphere(triangleIntersection, 50, { 1,1,0,1 });
-
-		if (triangleToMoveTo != nullptr)
-		{
-			SE::CPathFinding pathfinder;
-			myPath = pathfinder.AStar(myNavTriangles, playerIndex, nearestTriangle->myIndex, false);
-			if (myPath.size() == 0 /*&& myPath[0] == i*/)
-			{
-				myPosToMoveTo = myTransform->GetPosition();
-				return false;
-			}
-			std::vector<std::vector<SE::SNavVertex>> portals;
-
-			myGoalVectors = pathfinder.Funnel(myNavTriangles, myPath, myTransform->GetPosition(), triangleIntersection);
-
-			myShouldMove = true;
-			std::reverse(myGoalVectors.begin(), myGoalVectors.end());
-
-			if (myGoalVectors.size() == 0 /*&& myPath[0] == i*/)
-			{
-				myPosToMoveTo = myTransform->GetPosition();
-				return false;
-			}
-			if (aShowClickVFX)
-			{
-				Transform clickEffect;
-				clickEffect.SetPosition({ triangleIntersection.x, triangleIntersection.y + 10.0f,triangleIntersection.z });
-				SE::CVFXManager::GetInstance().PlayVFX("NavmeshClick", clickEffect);
-			}
-		}
-
-		return true;
-
+			nearestTriangle = trianglesHit[i];
 		}
 	}
 
-	return false;
+	unsigned int playerIndex;
+	SE::SNavTriangle* triangleToMoveTo = FindPosToMoveTo(triangleIntersection, triangleWasHit, nearestTriangle, playerIndex);
+
+	CDebugDrawer::GetInstance().DrawSphere(triangleIntersection, 50, { 1,1,0,1 });
+
+	if (triangleToMoveTo == nullptr)
+	{
+		return false;
+	}
+
+	SE::CPathFinding pathfinder;
+	myPath = pathfinder.AStar(myNavTriangles, playerIndex, nearestTriangle->myIndex, false);
+	if (myPath.size() == 0 /*&& myPath[0] == i*/)
+	{
+		myPosToMoveTo = myTransform->GetPosition();
+		return false;
+	}
+	std::vector<std::vector<SE::SNavVertex>> portals;
+
+	myGoalVectors = pathfinder.Funnel(myNavTriangles, myPath, myTransform->GetPosition(), triangleIntersection);
+
+	myShouldMove = true;
+
+	std::reverse(myGoalVectors.begin(), myGoalVectors.end());
+	if (myGoalVectors.size() > 1)
+	{
+		myGoalVectors.erase(std::prev(myGoalVectors.end()));
+	}
+
+	if (myGoalVectors.size() == 0 /*&& myPath[0] == i*/)
+	{
+		myPosToMoveTo = myTransform->GetPosition();
+		return false;
+	}
+
+	if (aShowClickVFX)
+	{
+		Transform clickEffect;
+		clickEffect.SetPosition({ triangleIntersection.x, triangleIntersection.y + 10.0f,triangleIntersection.z });
+		SE::CVFXManager::GetInstance().PlayVFX("NavmeshClick", clickEffect);
+	}
+
+	return true;
 }
 
 SE::SNavTriangle* PlayerSystem::FindPosToMoveTo(Vector3f& triangleIntersection, bool& triangleWasHit, SE::SNavTriangle* navTriangle, unsigned int& aPlayerIndex)
