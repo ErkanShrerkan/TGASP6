@@ -19,8 +19,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
-!Source/packages/**/*.dll
 
 # Fortran module files
 *.mod
@@ -30,9 +28,12 @@
 *.lai
 *.la
 *.a
-*.lib
-!Source/packages/**/*.lib
-!**/*assimp-vc142-mt_*.lib
+
+# Build yourself
+Lib/*Game_*.lib
+Lib/*Engine_*.lib
+Lib/*ImGui_*.lib
+Lib/*CommonUtilities_*.lib
 
 # Executables
 *.exe
