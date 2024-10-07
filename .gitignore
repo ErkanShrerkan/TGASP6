@@ -20,7 +20,7 @@
 *.so
 *.dylib
 *.dll
-!Source/packages/*.dll
+!Source/packages/**/*.dll
 
 # Fortran module files
 *.mod
