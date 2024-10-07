@@ -32,6 +32,7 @@
 *.a
 *.lib
 !Source/packages/**/*.lib
+!**/*assimp-vc142-mt_*.lib
 
 # Executables
 *.exe
